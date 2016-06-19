@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+</head>
+
+<body>
+<div class="container">
+
+    <h2><a href='http://sadness.party/<%=results[0].name %>'>sadness.party/<%= results[0].name %></a></h2>
+    <% results.forEach(function(r) { %>
+        <script>roomId = <%= r.id %>;</script>
+    <% }); %>
+    <span id='chat_invite'>why are you sad?</span><br>
+    <input type='text' id='message' autofocus>
+    <button id='message_submit' type='submit' class='sadness_button'>Post</button>
+    
+    <div id='the_rules'>
+        <u>Rules</u><br>
+        <b>Don't be stupid.</b><br>
+        <i>If you don't follow the rules, you will be permabanned</i>
+    </div>
+    <button id='refresh' class='sadness_button'>refresh</button>
+    
+    <div id='chat_list'>
+        <% chat_results.forEach(function(r) { %>
+            <li>
+                <script>console.log("<%= r.chat_user %>", <%= r.timestamp %>, "<%= r.chat_message %>");</script>
+                <%= r.chat_user %>&emsp;@<%= r.timestamp %>&emsp;<%= r.chat_message %>
+            </li>
+        <% }); %>
+    </div>
+    <script>
+        document.getElementById('message_submit').onclick = function() {
+            message = document.getElementById('message').value;
+            $.post('/api/room/message', {room: roomId, message: message}, function(res) {
+                document.getElementById('message').value = "";
+                redrawList();
+            }); 
+        };
+    </script>
+</div>
+    <script>
+        function redrawList() {
+            $.get('/api/room/'+roomId+'/messages', function(res) {
+                var messages = res.results;
+                var html_output = "";
+                for(i=0;i<messages.length;i++) {
+                    var m = messages[i];
+                    html_output += "<span class='chat_user'>"+m.chat_user+"</span>&emsp;";
+                    var date = new Date(parseInt(m.timestamp));
+                    var date_string = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    console.log(m.timestamp, date, date_string);
+                    html_output += "<span class='chat_time'>@"+date_string+"</span>&emsp;";
+                    html_output += "<span class='chat_message'>"+m.chat_message+"</span>";
+                }
+                document.getElementById('chat_list').innerHTML = html_output;
+            });
+        }
+        redrawList();
+        document.getElementById('refresh').onclick = redrawList;
+        setInterval(function() {
+//            redrawList();   
+        }, 20*1000);
+    </script>
+</body>
+</html>
