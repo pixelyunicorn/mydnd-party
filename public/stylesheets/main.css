@@ -1,0 +1,19 @@
+h2 {
+    display: inline-block;   
+}
+#sadness_bar {
+    border: solid 1px #555;
+    padding-left: 16px;
+    padding-right: 8px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    width: 40vw;
+    margin-left: 16px;
+    font-size: 15pt;  
+}
+.nav_link {
+    font-size: 9pt;
+    text-transform: uppercase;
+    margin-left: 8px;
+    margin-right: 8px;   
+}

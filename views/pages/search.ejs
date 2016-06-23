@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <% include ../partials/header.ejs %>
+    </head>
+    <body>
+        <% include ../partials/nav.ejs %>
+    
+        <h1>Search Results</h1>
+        
+        <script>
+            query = window.location.query;
+            $.get('/api/v1/resources', {tag: query, category: query, name: query}, function(res) {
+                document.write(res);
+                console.log(res);
+            });
+        </script>
+    </body>
+</html>

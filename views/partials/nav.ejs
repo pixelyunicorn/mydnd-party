@@ -1,8 +1,25 @@
 <nav>
     <h2>MyDND</h2>
-    <input type='search' id='sadness_bar' autofocus placeholder='Search for resources & links'><br>
+    <input type='search' id='sadness_bar' autofocus placeholder='Search for resources & links'>
     <button id='sadness_normal' class='sadness_button'>Search</button>
-    <br><br>
-    <a href='/add'>Submit a new resource</a>
-    <a href='/campaign'>Shortlink to your campaign</a>
+    <a href='/add' class='nav_link'>Submit resources</a>
+    <a href='/campaign' class='nav_link'>Campaign shortlinks</a>
+    
+    <script>
+        function leggo() {
+            document.location.href = '/search?q='+$('#sadness_bar').val();   
+        }
+        $('#sadness_bar').bind('enterKey', function() {
+            leggo();
+        });
+        $('#sadness_bar').keyup(function(e){
+            console.log(e.keyCode);
+            if(e.keyCode == 13) {
+                $(this).trigger("enterKey");
+            }
+        });
+        $('#sadness_normal').click(function() {
+            leggo(); 
+        });
+    </script>
 </nav>
