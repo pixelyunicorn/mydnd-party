@@ -113,7 +113,9 @@ app.get('/:campaign', function(request, response) {
     }      
     // Valid
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        client.query("select * from user_redirects where name='"+campaign+"' limit 1", function(err, res) {
+        client.query("select * from user_redirects where name='"+campaign+"'", function(err, res) {
+            console.log("Found "+res.rows[0]);
+            console.log("Redirecting to "+res.rows[0].url);
             res.writeHead(302, {'Location': res.rows[0].url});
             res.end();
         });
@@ -123,3 +125,5 @@ app.get('/:campaign', function(request, response) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
+
+//TODO shortlink conflict resolution

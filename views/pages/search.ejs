@@ -5,15 +5,42 @@
     </head>
     <body>
         <% include ../partials/nav.ejs %>
+        <% include ../partials/tags.ejs %>
     
         <h1>Search Results</h1>
         
+        <div id='results'></div>
         <script>
             query = window.location.query;
             $.get('/api/v1/resources', {tag: query, category: query, name: query}, function(res) {
-                document.write(res);
+                $('#results').html($('#results').html()+createSearchCard(res));
                 console.log(res);
             });
+            function open(url, id) {
+                $.post('/api/v1/resources/'+id+'/click', {}, function(res) {
+                    window.location.href = url; 
+                });
+            }
+            function createSearchCard(item) {
+                out = "<span class='search_card'>";
+                out += "<span class='search_title'><a onclick='open(\""+item.url+"\", "+item.id+")'>"+item.title+"</a></span>";
+                out += "<span class='search_description'>"+item.description+"</span>";
+                out += "<span class='search_url'>"+item.url+"</span>";
+                out += "<span class='search_tags'>
+                for(i=0;i<tags.length;i++) {
+                    if(item.tags.indexOf(tags[i].id) > -1) {
+                        out += "<span class='search_tag'>"+tags[i].name+"</span>";
+                    }
+                }
+                out += "</span>";
+                out += "<span class='search_categories'>";
+                for(i=0;i<categories.length;i++) {
+                    if(item.categories.indexOf(categories[i].id) > -1) {
+                        out += "<span class='search_category'>"+tags[i].name+"</span>";
+                    }
+                }
+                out += "</span></span>";
+            }
         </script>
     </body>
 </html>
