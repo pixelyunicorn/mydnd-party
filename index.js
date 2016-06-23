@@ -7,7 +7,7 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 
 function mysql_validate(str) {
-    return return str.replace(/[;]/g, "")
+    return str.replace(/[;]/g, "")
         .replace(/[']/g, "&#39;")
         .replace(/["]/g, "&quot;");
 }
