@@ -116,8 +116,8 @@ app.get('/:campaign', function(request, response) {
         client.query("select * from user_redirects where campaign='"+campaign+"'", function(err, res) {
             console.log("Found "+res.rows[0]);
             console.log("Redirecting to "+res.rows[0].url);
-            res.writeHead(302, {'Location': res.rows[0].url});
-            res.end();
+            response.writeHead(302, {'Location': res.rows[0].url});
+            response.end();
         });
     });  
 });

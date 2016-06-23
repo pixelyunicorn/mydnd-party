@@ -13,8 +13,10 @@
         <script>
             query = window.location.query;
             $.get('/api/v1/resources', {tag: query, category: query, name: query}, function(res) {
-                $('#results').html($('#results').html()+createSearchCard(res));
                 console.log(res);
+                for(i=0;i<res.results.length;i++) {
+                    $('#results').html($('#results').html()+createSearchCard(res.results[i]));
+                }
             });
             function open(url, id) {
                 $.post('/api/v1/resources/'+id+'/click', {}, function(res) {
