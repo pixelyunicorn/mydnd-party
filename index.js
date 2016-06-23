@@ -122,7 +122,8 @@ app.post('/api/v1/resources/:id/click', function(request, response) {
     var id = number_validate(request.params.id);
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("select clicks from resources where id = "+id, function(err, res) {
-            var clicks = res.rows[0].clicks++;
+            var clicks = res.rows[0].clicks + 1;
+            console.log("Have "+clicks+" clicks");
             client.query("update resources set clicks = "+clicks+" where id="+id+"", function(err, res) {
                 response.send({res:200, clicks: clicks});
             });

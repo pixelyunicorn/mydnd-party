@@ -1,5 +1,25 @@
+h1 {
+    margin-left:64px;   
+}
 h2 {
     display: inline-block;   
+    vertical-align: sub;
+}
+nav {
+    background-color: #555;
+    color: #09f;
+    margin-top: -16px;
+    padding-bottom: 4px;
+    padding-left: 16px;   
+}
+nav > a {
+    color:#09f;   
+}
+#sadness_button {
+    text-transform: uppercase;
+    font-weight: bold;
+    background: inherit;
+    border: dashed 2px white;   
 }
 #sadness_bar {
     border: solid 1px #555;
