@@ -26,7 +26,7 @@
                 out += "<span class='search_title'><a onclick='open(\""+item.url+"\", "+item.id+")'>"+item.title+"</a></span>";
                 out += "<span class='search_description'>"+item.description+"</span>";
                 out += "<span class='search_url'>"+item.url+"</span>";
-                out += "<span class='search_tags'>
+                out += "<span class='search_tags'>";
                 for(i=0;i<tags.length;i++) {
                     if(item.tags.indexOf(tags[i].id) > -1) {
                         out += "<span class='search_tag'>"+tags[i].name+"</span>";
