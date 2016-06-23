@@ -115,6 +115,7 @@ app.get('/:campaign', function(request, response) {
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("select * from user_redirects where campaign='"+campaign+"'", function(err, res) {
             if(res.rows.length == 0) {
+                console.error("Redirection fails");
                 response.writeHead(404, {});
                 response.end();
             }
