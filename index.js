@@ -114,8 +114,16 @@ app.get('/:campaign', function(request, response) {
     // Valid
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("select * from user_redirects where campaign='"+campaign+"'", function(err, res) {
+            if(res.rows.length == 0) {
+                response.writeHead(404, {});
+                response.end();
+            }
             console.log("Found "+res.rows[0]);
             console.log("Redirecting to "+res.rows[0].url);
+            var location = res.rows[0].url;
+            if(location.substr(0,4) != "http") {
+                location = "http://"+location;   
+            }
             response.writeHead(302, {'Location': res.rows[0].url});
             response.end();
         });

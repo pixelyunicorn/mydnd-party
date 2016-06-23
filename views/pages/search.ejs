@@ -15,7 +15,7 @@
             $.get('/api/v1/resources', {tag: query, category: query, name: query}, function(res) {
                 console.log(res);
                 for(i=0;i<res.results.length;i++) {
-                    $('#results').html($('#results').html()+createSearchCard(res.results[i]));
+                    $('#results').append(createSearchCard(res.results[i]));
                 }
             });
             function open(url, id) {
@@ -42,7 +42,8 @@
                     }
                 }
                 out += "</span></span>";
-            }
+                return;
+            }        
         </script>
     </body>
 </html>
