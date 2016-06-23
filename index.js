@@ -133,6 +133,7 @@ app.get('/:campaign', function(request, response) {
                 console.error("Redirection fails");
                 response.writeHead(404, {});
                 response.end();
+                return;
             }
             console.log("Found "+res.rows[0]);
             console.log("Redirecting to "+res.rows[0].url);
