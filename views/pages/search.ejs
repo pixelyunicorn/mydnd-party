@@ -19,7 +19,9 @@
                 }
             });
             function open(url, id) {
+                    console.log(url, id);
                 $.post('/api/v1/resources/'+id+'/click', {}, function(res) {
+                    console.log(url, id, res);
                     window.location.href = url; 
                 });
             }
