@@ -7,18 +7,30 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 
 function mysql_validate(str) {
-    return str.replace(/[;]/g, "")
-        .replace(/[']/g, "&#39;")
-        .replace(/["]/g, "&quot;");
+    if(str != undefined) {
+        return str.replace(/[;]/g, "")
+            .replace(/[']/g, "&#39;")
+            .replace(/["]/g, "&quot;");
+    } 
+    return "";
 }
 function key_validate(str) {
-    return str.replace(/[\W0-9]/g, "");   
+    if(str != undefined) {
+        return str.replace(/[\W0-9]/g, "");   
+    }
+    return "";
 }
 function url_validate(str) {
-    return str.replace(/["';]/g, "");   
+    if(str != undefined) {
+        return str.replace(/["';]/g, "");   
+    }
+    return "";
 }
 function number_validate(int) {
-    return int.replace(/[\D]/g, "");   
+    if(int != undefined) {
+        return int.replace(/[\D]/g, "");   
+    }
+    return "";
 }
 
 app.use(express.static(__dirname + '/public'));
