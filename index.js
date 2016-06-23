@@ -14,175 +14,112 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+// Index
 app.get('/', function(request, response) {
     response.render('pages/index');
     return;
 });
-app.get('/:room', function(request, response) {
-    // Get a specific sadness room
-    // TODO Validate strings
-    // TODO Surface most recent tags at bottom
-    // TODO Display chats
-    // TODO Send chats
-    // TODO Ads
-    room = request.params.room.toLowerCase();
-    if(room.indexOf('.') > -1) {
+
+// Add new resource
+app.get('/add', function(request, response) {
+    response.render('pages/add');
+    return;
+});
+
+// Campaign shortlink
+app.get('/campaign', function(request, response) {
+    response.render('pages/campaign');
+    return;
+});
+
+// Search results
+app.get('/search', function(request, response) {
+    response.render('pages/search');
+    return;
+});
+
+// API
+// Get campaign & all campaigns
+//?name=<CAMPAIGN_NAME>
+app.get('/api/v1/campaigns', function(request, response) {
+    name = request.params.name || "";
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+        console.log("select * from user_redirects WHERE campaign = '"+name+"'");
+        client.query("select * from user_redirects WHERE campaign = '"+name+"'", function(err, res) {
+            console.error(err);
+            response.send({results: res.rows});
+        });
+    }); 
+});
+// Add campaign
+//name = <CAMPAIGN NAME>, url = <CAMPAIGN_URL>
+app.post('/api/v1/campaigns', function(request, response) {
+    var campaignName = request.body.name;
+    var url = request.body.url;
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+        client.query("insert into user_redirects (campaign, url) values ('"+campaignName+"', '"+url+"')", function(err, res) {
+            response.send({res: 200});
+        });
+    });     
+});
+// Get resource & all resources w/ filtering
+//?tag=<TAGS>&category=<CATEGORIES>&name=<NAME>
+app.get('/api/v1/resources', function(request, response) {
+    tag = request.params.tag || "";
+    category = request.params.category || "";
+    name = request.params.name || "";
+    console.log(process.env.DATABASE_URL);
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+        console.log(client, err);
+        console.log("select * from resources WHERE tags LIKE '%"+tag+"%' OR categories LIKE '%"+category+"%' OR title LIKE '%"+name+"%' ORDER BY clicks DESC");
+        client.query("select * from resources WHERE tags LIKE '%"+tag+"%' OR categories LIKE '%"+category+"%' OR title LIKE '%"+name+"%' ORDER BY clicks DESC", function(err, res) {
+            console.error(err);
+            console.log(res);
+            response.send({results: res.rows});
+        });
+    }); 
+});
+// Add resource
+//title = <TITLE>, description = <DESCRIPTION>, url = <URL>, tags = <TAGS>, categories = <CATEGORY>, submitted = <timestamp>
+app.post('/api/v1/resources', function(request, response) {
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+        console.log("insert into resources (title, description, url, tags, categories, submitted, clicks) values ('"+request.body.title+"', '"+request.body.description+"', '"+request.body.url+"', '"+request.body.tags+"', '"+request.body.categories+"', "+new Date().getTime()+", 0)");
+        client.query("insert into resources (title, description, url, tags, categories, submitted, clicks) values ('"+request.body.title+"', '"+request.body.description+"', '"+request.body.url+"', '"+request.body.tags+"', '"+request.body.categories+"', "+new Date().getTime()+", 0)", function(err, res) {
+            response.send({res: 200, msg: err});
+        });
+    });     
+});
+
+// Add a click to a resource
+app.post('/api/v1/resources/:id/click', function(request, response) {
+    var id = request.params.id;
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+        client.query("select clicks from resources where id = "+id, function(err, res) {
+            var clicks = res.rows[0].clicks++;
+            client.query("update resources set clicks = "+clicks+" where id="+id+"", function(err, res) {
+                response.send({res:200, clicks: clicks});
+            });
+        });
+    });  
+});
+
+// Shortlinks
+app.get('/:campaign', function(request, response) {
+    campaign = request.params.campaign.toLowerCase();
+    if(campaign.indexOf('.') > -1 || campaign.indexOf('/') > -1) {
         // Is requesting a file
-        response.send(room);
+        response.send(campaign);
         return;
-    }   
-    // SQL validation
-    room = room.replace(/[\W0-9]/g, "");
+    }      
+    // Valid
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        global.client = client;
-        client.query("SELECT * FROM room_list WHERE name = '"+room+"'", function(err, result) {
-            // Check if the room exists
-            console.log(result);
-            if(result == undefined || result.rows == 0) {
-                //Create it!
-                console.log("Create "+room);
-                global.client.query("insert into room_list (name) VALUES('"+room+"')");
-                global.client.query("SELECT * FROM room_list WHERE name = '"+room+"'", function(err, result) {
-                     if (err) { 
-                        console.error(err); 
-                        response.send("Error " + err); 
-                    } else {
-                        global.client.query('SELECT * FROM room_chat WHERE room_id = '+result.rows[0].id+' ORDER BY timestamp ASC', function(err, chat_results) {
-                            done();
-                            if (err) { 
-                                console.error(err); 
-                                response.send("Error " + err); 
-                            } else { 
-                                response.render('pages/db', {results: result.rows, chat_results: chat_results.rows} );
-                            }
-                        });
-                    }
-                });
-                return;
-            }
-            
-            if (err) { 
-                console.error(err); 
-                response.send("Error " + err); 
-            } else { 
-                client.query('SELECT * FROM room_chat WHERE room_id = '+result.rows[0].id+' ORDER BY timestamp DESC', function(err, chat_results) {
-                    done();
-                    if (err) { 
-                        console.error(err); 
-                        response.send("Error " + err); 
-                    } else { 
-                        response.render('pages/db', {results: result.rows, chat_results: chat_results.rows} );
-                    }
-                });
-            }
+        client.query("insert into user_redirects (campaign, url) values ('"+campaignName+"', '"+url+"')", function(err, res) {
+            res.writeHead(302, {'Location': res.rows[0].url});
+            res.end();
         });
-    });
-//    response.render('pages/room', {results: result.row});
+    });  
 });
-// TODO I NEED TO VALIDATE SINGLE QUOTES
-app.post('/api/room/message', function(request, response) {
-    //User sent a message
-    var roomId = request.body.room;
-    var message = request.body.message;
-    // Validation
-    message = message
-        .replace(/\\/g, "backslash")
-        .replace(/\(/g, "lparenthesis")
-        .replace(/\)/g, "rparenthesis")
-        .replace(/'/g, "&039;")
-        .replace(/;/g, "semicolon")
-        .replace(/[<>]/g, "carat");
-    
-    var userId = ip.address(); // IP address
-    var timestamp = new Date().getTime();
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        client.query("insert into room_chat (room_id, chat_message, chat_user, timestamp) values ("+roomId+", '"+message+"', '"+userId+"', "+timestamp+")", function(err, res) {
-            // Inserted!
-            console.log("insert into room_chat (room_id, chat_message, chat_user, timestamp) values ("+roomId+", '"+message+"', '"+userId+"', "+timestamp+")");
-            response.send("{res: 200}");
-        });
-    });
-});
-app.get('/api/rooms', function(request, response) {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        console.log('room '+request.params.id);
-        client.query("select * from room_list", function(err, res) {
-            // Get!
-            response.send({results: res.rows});
-        });
-    });
-    
-});
-app.get('/api/messages', function(request, response) {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        console.log('room '+request.params.id);
-        client.query("select * from room_chat LIMIT 100", function(err, res) {
-            // Get!
-            response.send({results: res.rows});
-        });
-    });
-    
-});
-app.get('/api/user/:id', function(request, response) {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        console.log('room '+request.params.id);
-        client.query("select * from room_chat where chat_user='"+request.params.id+"' ORDER BY timestamp", function(err, res) {
-            // Get!
-            response.send({results: res.rows});
-        });
-    });
-    
-});
-app.get('/api/rooms/latest', function(request, response) {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        console.log('room '+request.params.id);
-        client.query("select * from room_chat LIMIT 100", function(err, res) {
-            // Get!
-//            response.send({results: res.rows});
-            room_ids = [];
-            var max_rooms = 5;
-            for(r=0;r<res.rows.length;r++) {
-                var room = res.rows[r].room_id;
-                if(room_ids.indexOf(room) == -1 && room_ids.length < max_rooms) {
-                    room_ids.push(room);
-                }   
-            }
-            console.log(room_ids, "Ids");
-            
-            room_names = [];
-            for(r=0;r<room_ids.length;r++) {
-                console.log("Query "+room_ids[r]);
-                client.query("select * from room_list WHERE id="+room_ids[r], function(err, res) {
-                    console.log("Response");
-                    room_names.push(res.rows[0].name);  
-                    console.log(res.rows[0].name);
-                    if(room_names.length >= max_rooms) {
-                        response.send({results: room_names});
-                    }
-                }
-            )};
-        });
-    });
-    
-});
-app.get('/api/room/:id/messages', function(request, response) {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        console.log('room '+request.params.id);
-        client.query("select * from room_chat where room_id = "+request.params.id+" order by timestamp DESC", function(err, res) {
-            // Get!
-            console.log("select * from room_chat where room_id = "+request.params.id);
-            console.log(err);
-            console.log(res.rows);
-            response.send({results: res.rows});
-        });
-    });
-});
-// TODO Easy submission action
-// TODO Move the room heading up a little
-// TODO Install a pretty font
-// TODO More sadness in top left corner
-// TODO Character codes
-// TODO More APIs
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });

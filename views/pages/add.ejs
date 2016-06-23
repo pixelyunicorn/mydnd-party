@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    <% include ../partials/tags.ejs %>
+    
+    <h1>Add a new resource</h1>
+    We are curating the best DND resources for users to quickly find. If you have a great resource to share, please add it. 
+    
+    <input type='text' placeholder="Title" class='general' id='title'/><br>
+    Give a brief description (no more than 140 characters)<br>
+    <div contenteditable="true" id='description' style='border:solid 1px black'></div>
+    <input type="url" placeholder="Url" class='general' id='url' /><br>
+    <b>TAGS</b>
+    <script>
+        for(i in tags) {
+            var t = tags[i];
+            document.write(t.name+'<input type="checkbox" id="'+t.id+'" />');
+        }
+    </script>
+    <b>CATEGORIES</b>
+    <script>
+        for(i in categories) {
+            var c = categories[i];
+            document.write(c.name+'<input type="checkbox" id="'+c.id+'" />');
+        }   
+    </script>
+    
+    <button type="submit" id='submit'>Submit</button>
+    <script>
+        $('#submit').click(function() {
+            var tout = "";
+            for(i=0;i<tags.length;i++) {
+                if($('#'+tags[i].id)[0].checked) {
+                    tout += tags[i].id+",";  
+                }
+            }
+            var cout = "";
+            for(i=0;i<categories.length;i++) {
+                console.log(i);
+                if($('#'+categories[i].id)[0].checked) {
+                    cout += categories[i].id+",";  
+                }
+            }
+            $.post('/api/v1/resources', {title: document.getElementById('title').value, description: document.getElementById('description').innerHTML, url: document.getElementById('url').value, tags:tout, categories:cout, submitted: new Date().getTime()}, function(response) {
+                alert(response); 
+            });
+        });
+    </script>
+</body>
+</html>
