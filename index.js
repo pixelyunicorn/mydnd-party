@@ -6,6 +6,21 @@ var ip = require('ip');
 var app = express();
 app.set('port', (process.env.PORT || 5000));
 
+function mysql_validate(str) {
+    return return str.replace(/[;]/g, "")
+        .replace(/[']/g, "&#39;")
+        .replace(/["]/g, "&quot;");
+}
+function key_validate(str) {
+    return str.replace(/[\W0-9]/g, "");   
+}
+function url_validate(str) {
+    return str.replace(/["';]/g, "");   
+}
+function number_validate(int) {
+    return int.replace(/[\D]/g, "");   
+}
+
 app.use(express.static(__dirname + '/public'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,7 +57,7 @@ app.get('/search', function(request, response) {
 // Get campaign & all campaigns
 //?name=<CAMPAIGN_NAME>
 app.get('/api/v1/campaigns', function(request, response) {
-    name = request.params.name || "";
+    name = mysql_validate(request.params.name) || "";
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         console.log("select * from user_redirects WHERE campaign LIKE '%"+name+"'%");
         client.query("select * from user_redirects WHERE campaign LIKE '%"+name+"%'", function(err, res) {
@@ -54,8 +69,8 @@ app.get('/api/v1/campaigns', function(request, response) {
 // Add campaign
 //name = <CAMPAIGN NAME>, url = <CAMPAIGN_URL>
 app.post('/api/v1/campaigns', function(request, response) {
-    var campaignName = request.body.name;
-    var url = request.body.url;
+    var campaignName = key_validate(request.body.name);
+    var url = url_validate(request.body.url);
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("insert into user_redirects (campaign, url) values ('"+campaignName+"', '"+url+"')", function(err, res) {
             response.send({res: 200, err: err});
@@ -65,9 +80,9 @@ app.post('/api/v1/campaigns', function(request, response) {
 // Get resource & all resources w/ filtering
 //?tag=<TAGS>&category=<CATEGORIES>&name=<NAME>
 app.get('/api/v1/resources', function(request, response) {
-    tag = request.params.tag || "";
-    category = request.params.category || "";
-    name = request.params.name || "";
+    tag = mysql_validate(request.params.tag) || "";
+    category = mysql_validate(request.params.category) || "";
+    name = mysql_validate(request.params.name) || "";
     console.log(process.env.DATABASE_URL);
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         console.log(client, err);
@@ -92,7 +107,7 @@ app.post('/api/v1/resources', function(request, response) {
 
 // Add a click to a resource
 app.post('/api/v1/resources/:id/click', function(request, response) {
-    var id = request.params.id;
+    var id = number_validate(request.params.id);
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("select clicks from resources where id = "+id, function(err, res) {
             var clicks = res.rows[0].clicks++;
@@ -105,7 +120,7 @@ app.post('/api/v1/resources/:id/click', function(request, response) {
 
 // Shortlinks
 app.get('/:campaign', function(request, response) {
-    campaign = request.params.campaign.toLowerCase();
+    campaign = key_validate(request.params.campaign.toLowerCase());
     if(campaign.indexOf('.') > -1 || campaign.indexOf('/') > -1) {
         // Is requesting a file
         response.send(campaign);
@@ -114,7 +129,7 @@ app.get('/:campaign', function(request, response) {
     // Valid
     pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("select * from user_redirects where campaign='"+campaign+"'", function(err, res) {
-            if(res.rows.length == 0) {
+            if(res.rows.length == 0 || res.rows[0].url == undefined) {
                 console.error("Redirection fails");
                 response.writeHead(404, {});
                 response.end();
