@@ -13,21 +13,15 @@
         <script>
             query = window.location.query;
             $.get('/api/v1/resources', {tag: query, category: query, name: query}, function(res) {
-                console.log(res);
-                for(i=0;i<res.results.length;i++) {
-                    $('#results').append(createSearchCard(res.results[i]));
+                console.log(res, res.results.length);
+                for(index=0;index<res.results.length;index++) {
+                    console.log(res.results[index])
+                    $('#results').append(createSearchCard(res.results[index]));
                 }
             });
-            function open(url, id) {
-                    console.log(url, id);
-                $.post('/api/v1/resources/'+id+'/click', {}, function(res) {
-                    console.log(url, id, res);
-                    window.location.href = url; 
-                });
-            }
             function createSearchCard(item) {
                 out = "<span class='search_card'>";
-                out += "<span class='search_title'><a onclick='open(\""+item.url+"\", "+item.id+")'>"+item.title+"</a></span>";
+                out += "<span class='search_title'><a href='/api/v1/resources/"+item.id+"/click'>"+item.title+"</a></span>";
                 out += "<span class='search_description'>"+item.description+"</span>";
                 out += "<span class='search_url'>"+item.url+"</span>";
                 out += "<span class='search_tags'>";
@@ -40,7 +34,7 @@
                 out += "<span class='search_categories'>";
                 for(i=0;i<categories.length;i++) {
                     if(item.categories.indexOf(categories[i].id) > -1) {
-                        out += "<span class='search_category'>"+tags[i].name+"</span>";
+                        out += "<span class='search_category'>"+categories[i].name+"</span>";
                     }
                 }
                 out += "</span></span>";

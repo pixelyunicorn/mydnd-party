@@ -1,7 +1,7 @@
 {
-  "name": "sadness.party",
+  "name": "mydnd.party",
   "version": "0.1.0",
-  "description": "Studying for a final late at night?",
+  "description": "One-stopshop!",
   "engines": {
     "node": "5.9.1"
   },
@@ -13,12 +13,13 @@
     "body-parser": "^1.15.1",
     "ejs": "2.4.1",
     "express": "4.13.3",
+    "firebase": "^3.1.0",
     "ip": "^1.1.3",
     "pg": "4.x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fleker/sadness-party"
+    "url": "https://github.com/fleker/mydnd-party"
   },
   "keywords": [
     "node",

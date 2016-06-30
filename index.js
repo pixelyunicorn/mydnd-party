@@ -1,7 +1,13 @@
 var express = require('express');
-var pg = require('pg');
+//var pg = require('pg');
+var firebase = require("firebase");
 var bodyParser = require('body-parser');
-var ip = require('ip');
+
+firebase.initializeApp({
+  serviceAccount: "mydnd-party-ae1947af60f3.json",
+  databaseURL: "https://mydnd-party.firebaseio.com"
+});
+var db = firebase.database();
 
 var app = express();
 app.set('port', (process.env.PORT || 5000));
@@ -65,70 +71,117 @@ app.get('/search', function(request, response) {
     return;
 });
 
+function returnSnapshot(snap) {
+    //        console.log(snapshot);
+        c = [];
+        snap.forEach(function(dinoSnapshot) {
+//        console.log("The dinosaur just shorter than the stegasaurus is " + dinoSnapshot.val());
+            c.push(dinoSnapshot.val());
+            console.log(c);
+      });
+    response.send({results: c, err: "OK"});   
+}
 // API
 // Get campaign & all campaigns
 //?name=<CAMPAIGN_NAME>
 app.get('/api/v1/campaigns', function(request, response) {
     name = mysql_validate(request.params.name) || "";
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    /*pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         console.log("select * from user_redirects WHERE campaign LIKE '%"+name+"'%");
         client.query("select * from user_redirects WHERE campaign LIKE '%"+name+"%'", function(err, res) {
             console.error(err);
             response.send({results: res.rows, err: err});
         });
-    }); 
+    }); */
+    db.ref('/campaigns').orderByChild('name').startAt(name).on("value", function(snapshot) {
+        returnSnapshot(snapshot);
+  });
 });
 // Add campaign
 //name = <CAMPAIGN NAME>, url = <CAMPAIGN_URL>
 app.post('/api/v1/campaigns', function(request, response) {
     var campaignName = key_validate(request.body.name);
     var url = url_validate(request.body.url);
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    /*pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("insert into user_redirects (campaign, url) values ('"+campaignName+"', '"+url+"')", function(err, res) {
             response.send({res: 200, err: err});
         });
-    });     
+    });*/
+    var campaignsRef = db.ref('/campaigns');
+    campaignsRef.push({
+        name: request.body.name,
+        url: request.body.url
+    });
+    response.send({res: 200, msg: "OK"});
 });
 // Get resource & all resources w/ filtering
 //?tag=<TAGS>&category=<CATEGORIES>&name=<NAME>
 app.get('/api/v1/resources', function(request, response) {
-    tag = mysql_validate(request.params.tag) || "";
-    category = mysql_validate(request.params.category) || "";
-    name = mysql_validate(request.params.name) || "";
-    console.log(process.env.DATABASE_URL);
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        console.log(client, err);
-        console.log("select * from resources WHERE tags LIKE '%"+tag+"%' OR categories LIKE '%"+category+"%' OR title LIKE '%"+name+"%' ORDER BY clicks DESC");
-        client.query("select * from resources WHERE tags LIKE '%"+tag+"%' OR categories LIKE '%"+category+"%' OR title LIKE '%"+name+"%' ORDER BY clicks DESC", function(err, res) {
-            console.error(err);
-            console.log(res);
-            response.send({results: res.rows, err: err});
+    tag = request.query.tag || "";
+    category = request.query.category || "";
+    name = request.query.name || "";
+    if(tag !== undefined)
+        tag = tag.toLocaleLowerCase();
+    if(category !== undefined)
+        category = category.toLocaleLowerCase();
+    if(name !== undefined)
+        name = name.toLocaleLowerCase();
+    console.log(request.query.tag, request.query.category, name, '1');
+        db.ref('/resources').orderByChild('clicks').on('value', function(snap) {
+//            returnSnapshot(snapshot); 
+            c = [];
+            snap.forEach(function(dinoSnapshot) {
+                console.log("The dinosaur just shorter than the stegasaurus is ", dinoSnapshot.val());
+                if(dinoSnapshot.val().tags.toLowerCase().indexOf(tag) > -1 && dinoSnapshot.val().categories.toLowerCase().indexOf(category) > -1 && dinoSnapshot.val().title.toLowerCase().indexOf(name) > -1) {
+                    c.push(dinoSnapshot.val());
+                    c[c.length-1].id = dinoSnapshot.key;
+                    console.log(c);
+                }
+            });
+            response.send({results: c, err: "OK"}); 
+            response.end();
         });
-    }); 
 });
 // Add resource
 //title = <TITLE>, description = <DESCRIPTION>, url = <URL>, tags = <TAGS>, categories = <CATEGORY>, submitted = <timestamp>
 app.post('/api/v1/resources', function(request, response) {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    /*pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         console.log("insert into resources (title, description, url, tags, categories, submitted, clicks) values ('"+request.body.title+"', '"+request.body.description+"', '"+request.body.url+"', '"+request.body.tags+"', '"+request.body.categories+"', "+new Date().getTime()+", 0)");
+        if(request.body.description.length > 140) {
+            request.body.description = request.body.description.substring(0,140);   
+        }
         client.query("insert into resources (title, description, url, tags, categories, submitted, clicks) values ('"+request.body.title+"', '"+request.body.description+"', '"+request.body.url+"', '"+request.body.tags+"', '"+request.body.categories+"', "+new Date().getTime()+", 0)", function(err, res) {
             response.send({res: 200, msg: err});
         });
-    });     
+    });  */
+    if(request.body.description.length > 140) {
+            request.body.description = request.body.description.substring(0,140);   
+        }
+    var resourcesRef = db.ref('/resources');
+    resourcesRef.push({
+        title: request.body.title,
+        description: request.body.description,
+        url: request.body.url,
+        tags: request.body.tags,
+        categories: request.body.categories,
+        submitted: new Date().getTime(),
+        clicks: 0
+    });
+    response.send({res: 200, msg: "OK"});
 });
 
-// Add a click to a resource
-app.post('/api/v1/resources/:id/click', function(request, response) {
-    var id = number_validate(request.params.id);
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        client.query("select clicks from resources where id = "+id, function(err, res) {
-            var clicks = res.rows[0].clicks + 1;
-            console.log("Have "+clicks+" clicks");
-            client.query("update resources set clicks = "+clicks+" where id="+id+"", function(err, res) {
-                response.send({res:200, clicks: clicks});
-            });
-        });
-    });  
+// Add a click to a resource and redirect
+app.get('/api/v1/resources/:id/click', function(request, response) {
+    var id = request.params.id;
+    var upvotesRef = db.ref("/resources/"+id+"/clicks");
+    upvotesRef.transaction(function (current_value) {
+      return (current_value || 0) + 1;
+    }); 
+    db.ref("/resources/"+id+"/url").on('value', function(snapshot) {
+//        response.writeHead(302, {'Location': snapshot.val()});
+        response.redirect(snapshot.val());
+//        response.end();
+    });    
 });
 
 // Shortlinks
@@ -140,7 +193,15 @@ app.get('/:campaign', function(request, response) {
         return;
     }      
     // Valid
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    db.ref('/campaigns').orderByChild('name').startAt(campaign).on("value", function(snap) {
+    snap.forEach(function(dinoSnapshot) {
+//        console.log("The dinosaur just shorter than the stegasaurus is " + dinoSnapshot.val());
+//        response.writeHead(302, {'Location': dinoSnapshot.val().url});
+        response.redirect(dinoSnapshot.val().url);
+//            response.end();
+    });    
+    });
+    /*pg.connect(process.env.DATABASE_URL, function(err, client, done) {
         client.query("select * from user_redirects where campaign='"+campaign+"'", function(err, res) {
             if(res.rows.length == 0 || res.rows[0].url == undefined) {
                 console.error("Redirection fails");
@@ -157,7 +218,7 @@ app.get('/:campaign', function(request, response) {
             response.writeHead(302, {'Location': res.rows[0].url});
             response.end();
         });
-    });  
+    });  */
 });
 
 app.listen(app.get('port'), function() {

@@ -14,23 +14,28 @@
     <input type='text' placeholder="Title" class='general' id='title'/><br>
     Give a brief description (no more than 140 characters)<br>
     <div contenteditable="true" id='description' style='border:solid 1px black'></div>
+    <span id='description_char_count'></span>
     <input type="url" placeholder="Url" class='general' id='url' /><br>
-    <b>TAGS</b>
+    <span class='submission_tag_title'>Tags</span>
     <script>
         for(i in tags) {
             var t = tags[i];
-            document.write(t.name+'<input type="checkbox" id="'+t.id+'" />');
+            document.write(t.name+'<input type="checkbox" class="submission_tag" id="'+t.id+'" />');
         }
     </script>
-    <b>CATEGORIES</b>
+    <span class='submission_tag_title'>Categories</span>
     <script>
         for(i in categories) {
             var c = categories[i];
-            document.write(c.name+'<input type="checkbox" id="'+c.id+'" />');
+            document.write(c.name+'<input type="checkbox" class="submission_tag" id="'+c.id+'" />');
         }   
+        $('#description').on('keydown', function(res) {
+            var dval = $('#description').html();
+            $('#description_char_count').html(dval.length);
+        });
     </script>
     
-    <button type="submit" id='submit'>Submit</button>
+    <button type="submit" id='submit' class='submission'>Submit</button>
     <script>
         $('#submit').click(function() {
             var tout = "";
