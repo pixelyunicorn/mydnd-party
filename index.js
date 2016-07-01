@@ -71,6 +71,15 @@ app.get('/search', function(request, response) {
     return;
 });
 
+// Custom generators
+// Search results
+app.get('/generators/:name', function(request, response) {
+    var name = request.params.name;
+    if(name == "backstory")
+        response.render('pages/generator_backstory');
+    return;
+});
+
 function returnSnapshot(snap) {
     //        console.log(snapshot);
         c = [];
@@ -117,6 +126,7 @@ app.post('/api/v1/campaigns', function(request, response) {
 // Get resource & all resources w/ filtering
 //?tag=<TAGS>&category=<CATEGORIES>&name=<NAME>
 app.get('/api/v1/resources', function(request, response) {
+    console.log(request.query);
     tag = request.query.tag || "";
     category = request.query.category || "";
     name = request.query.name || "";
@@ -126,13 +136,15 @@ app.get('/api/v1/resources', function(request, response) {
         category = category.toLocaleLowerCase();
     if(name !== undefined)
         name = name.toLocaleLowerCase();
-    console.log(request.query.tag, request.query.category, name, '1');
+    console.log(request.query);
+    console.log(tag, category, name);
         db.ref('/resources').orderByChild('clicks').on('value', function(snap) {
 //            returnSnapshot(snapshot); 
             c = [];
             snap.forEach(function(dinoSnapshot) {
-                console.log("The dinosaur just shorter than the stegasaurus is ", dinoSnapshot.val());
-                if(dinoSnapshot.val().tags.toLowerCase().indexOf(tag) > -1 && dinoSnapshot.val().categories.toLowerCase().indexOf(category) > -1 && dinoSnapshot.val().title.toLowerCase().indexOf(name) > -1) {
+                console.log(dinoSnapshot.val().title, dinoSnapshot.val().tags.toLowerCase().indexOf(tag) > -1, tag != "", dinoSnapshot.val().categories.toLowerCase().indexOf(category) > -1, category != "", dinoSnapshot.val().title.toLowerCase().indexOf(name) > -1, name != "");
+                if((dinoSnapshot.val().tags.toLowerCase().indexOf(tag) > -1 && tag != "") || (dinoSnapshot.val().categories.toLowerCase().indexOf(category) > -1 && category != "") || (dinoSnapshot.val().title.toLowerCase().indexOf(name) > -1 && name != "")) {
+                    console.log("The dinosaur just shorter than the stegasaurus is ", dinoSnapshot.val());
                     c.push(dinoSnapshot.val());
                     c[c.length-1].id = dinoSnapshot.key;
                     console.log(c);

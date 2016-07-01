@@ -15,7 +15,7 @@ nav {
 nav > a {
     color:#09f;   
 }
-#sadness_normal {
+.sadness_button {
     text-transform: uppercase;
     font-weight: bold;
     background: inherit;
@@ -114,4 +114,36 @@ button.submission {
     margin-left:16px;
     display: block;
     text-transform: uppercase;
+}
+.advanced_search_modal {
+    position: fixed;
+    left:20%;
+    right:20%;
+    top:20%;
+    bottom:20%;
+    background-color:#ddd;
+    transition:opacity 0.5s;
+    opacity:0;
+    display:none;
+    z-index: 1;
+    box-shadow: #999 0px 0px 0px 0px;
+}
+.advanced_search_modal.show {
+    opacity: 1;
+    display:block;
+    box-shadow: #999 0px 4px 10px 3px;
+}
+span.backstory_tag_remove {
+    font-size: 10pt;
+    vertical-align: middle;
+    margin-left: -32px;
+    padding-right: 32px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.backstory_item:hover > .backstory_tag_remove {
+    color: blue;
+}
+.close_search_modal {
+    cursor: pointer;
 }

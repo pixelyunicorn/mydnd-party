@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    
+    <h1>Character Backstory Generator</h1>
+    Who is your character? What kind of backstory do they have? Figure that out with this generator. Let it inspire great, complicated characters to make the world that much more immersive. Email "handnf@gmail.com" with any suggestions.
+    <br><br>
+    Click on each underlined phrase to randomly alter it. Click on the add button to add another item to the character's backstory.
+    
+    <div id='backstory_list'>
+    
+    </div>
+    <button onclick='additem()'>Add</button>
+
+    <style>
+        .backstory_tag {
+            border-bottom: dashed 1px #333;
+            cursor: pointer;
+        }
+        .backstory_item {
+            display: block;
+            text-align: center;
+            font-size: 22pt;
+            margin-top: 8px;
+            color: #777;
+            font-weight: 100;  
+        }
+    </style>
+    <script>
+        var actions = [
+                "skip", "whistle", "sing", "wrestle", "play sports", "flirt with others", "read", "spend time alone", "drink", "fight", "kill things", "bully", "steal", "hunt", "sleep", "dance"
+            ];
+        var actions_past = [
+                "stole", "killed", "beat"
+            ];
+        var ailments = [
+                "blind", "deaf", "dumb", "retarded", "paralyzed", "insomiac", "stupid", "scarred", "crippled", "dying", "feverish", "ill", "dead", "pregnant", "on fire", "suicidal"
+            ];
+        var animals = [
+                "raccoon", "horse", "cat", "bat", "dog", "owl", "raven", "pigeon", "cow", "sheep", "lamb", "deer", "wolf", "bear", "squirrel", "chipmunk", "chicken", "fish", "shark", "whale", "bird"
+            ];
+        
+        var buildings = [
+                "a puppet shop", "a library", "a school", "the nearby castle", "a bookstore", "an apothecary shop", "a nearby alley", "a local tavern"
+            ];
+        var careers = [
+                "carpenter", "cooper", "messenger", "smith", "farmer", "cleaner", "prostitute", "knight", "adventurer", "bard", "thief", "merchant", "artist", "painter", "juggler", "street performer", "professor", "nun", "priest", "engineer", "writer", "poet", "baker", "butcher", "fisherman", "maester", "elder", "mayor", "former king", "queen", "former queen", "prince", "priestess", "princess", "athlete", "hero", "heroine", "animal tamer", "pirate", "ninja", "wizard", "witch", "warlock", "guard", "executioner", "hunter", "farmer", "hobo", "drunk", "apothecary", "herbalist", "soldier", "archer", "swordsman", "highwayman", "chef", "doctor", "murder-hobos"
+            ];
+        var careers_skillable = [
+                "carpenter", "smith", "cooper", "pirate", "swordsman", "knight"
+            ];
+        var clothing = [
+                "some socks", "some shoes", "a hat", "a shirt", "some pants", "some undergarments"
+            ];  
+        var dreams = [
+                "find love", "gain power", "travel", "fly"
+            ];
+        var family = [
+                "brother", "sister", "aunt", "uncle", "husband", "wife", "cousin", "nephew", "niece", "son", "daughter", "child", "grandfather", "grandmother", "grandson", "granddaughter", "great uncle", "great aunt", "great grandmother", "great grandfather", "great grandson", "great granddaughter", "dog", "cat", "horse", "cow", "chicken"
+            ];
+        var items = [
+                "ring", "magic ring", "bracelet", "magic bracelet", "diamond"
+            ];  
+        var items_plus = items.concat([
+                "frog", "bird", "rabbit", "friend"
+            ])
+        var limbs = [
+                "a hand", "an arm", "nose", "an ear", "both hands", "both arms", "both ears", "a foot", "both feet", "a leg", "both legs", "head", "toenail", "fingernail", "liver", "lung", "kidney", "genitalia", "hair", "a finger", "a toe", "hair"
+            ];
+        var limbs_special = [
+                "eleventh toe", "eleventh finger", "mustache", "beard", "sideburns", "scar", "ambiguous genetalia", "double jointed elbow", "swollen ankles"
+            ];
+        var locations = [
+                "river", "forest", "mountain", "cave", "tavern"
+            ];
+        var notables = [
+                "Birthday is today", "A wanted criminal", "Whistles folk tunes", "Natural born leader"
+            ];
+        var persons = [
+                "apothecary", "neighbor", "elves", "imps", "orcs"
+            ];
+        var personalities = [
+                "thirsty", "angry", "depressed", "nilhistic", "existenstial", "humorless", "lowbrow", "obnoxious", "arrogant", "sneaky", "alcoholic", "gullible", "horny", "greedy", "hungry", "intelligent", "easily excitable", "poor", "happy", "friendly", "sarcastic", "selfish", "nonreligious", "virgin"
+            ];
+        var prices = [
+                "much gold", "a few copper pieces", "not much", "a bargain", "cheaper than expected", "too much"
+            ];
+        var relationships = [
+                "in love with", "hates", "racist against"
+            ];
+        var scaries = [
+                "spiders", "heights", "letting friends down", "snakes", "bees", "insects"
+            ];
+        var superlatives = [
+                "best", "worst", "smartest", "stupidest", "strongest", "weakest", "scariest"
+            ];
+        var time_day = [
+                "first thing in the morning", "before they go to sleep", "at noon", "at dawn", "at dusk"
+            ];
+        var weapons = [
+                "shield", "sword", "dagger", "knife", "spear", "bow", "masterwork sword"
+            ];
+        
+        var map = {
+            actions: actions,
+            actions_past: actions_past,
+            ailments: ailments,
+            animals: animals,
+            buildings: buildings,
+            careers: careers,
+            careers_skillable: careers_skillable,
+            clothing: clothing, 
+            dreams: dreams,
+            family: family,
+            items: items,
+            items_plus: items_plus,
+            limbs: limbs,
+            limbs_special: limbs_special,
+            locations: locations,
+            notables: notables,
+            persons: persons,
+            personalities: personalities,
+            prices: prices,
+            relationships: relationships,
+            scaries: scaries,
+            superlatives: superlatives,
+            time_day: time_day,
+            weapons: weapons
+        };
+        
+        /* [G]et a [r]andom element from list */
+        function gr(list) {
+            return list[Math.floor(Math.random()*list.length)];
+        }
+        
+        /* [G]et a [r]andom index from list */
+        function gri(list) {
+            return Math.floor(Math.random()*list.length);
+        }
+        
+        function release(element, index) {
+            $(element).parent().remove();
+            already_added_items.pop(already_added_items.indexOf(index));
+        }
+        
+        function refresh(element, key) {
+            if(key == "number")
+                $(element).html(Math.floor(Math.random()*keyRange[1]-keyRange[0]));
+            else
+                $(element).html(gr(map[key]));   
+        }
+        
+        already_added_items = [];
+        function additem() {
+            index = gri(lines);
+            if(already_added_items.length > mapSize()) {
+                alert("Sorry, no more backstory items exist right now!");
+                return;
+                //TODO Hide add button
+                //TODO Remove spans
+            }
+            if(already_added_items.indexOf(index) > -1) {
+                additem();
+                return;
+            }   
+            already_added_items.push(index);
+            $('#backstory_list').append("<span class='backstory_item'><span class='backstory_tag_remove' onclick='release(this, "+index+")'>X</span>"+lines[index]+"</span>");   
+        }
+        
+        function mapSize() {
+            var inp = 0;
+            for(i in map) {
+                inp++;   
+            }
+            return inp;
+        }
+        
+        keyRange = [];
+        function gen(key, keyRange) {
+            keyRange = this.keyRange;
+            if(key == "number") {
+                return " "+"<span class='backstory_tag' onclick='refresh(this, \""+key+"\")'>"+Math.floor(Math.random()*keyRange[1]-keyRange[0])+"</span>";
+            } else {
+                return " "+"<span class='backstory_tag' onclick='refresh(this, \""+key+"\")'>"+gr(map[key])+"</span>";   
+            }
+        }
+        
+        var lines = [
+//                "Is"+gen('number', [0,150])+" years old",
+                "Is"+gen('ailments'),
+                "Is"+gen('personalities'),
+                "Likes to walk to the nearby"+gen('locations'),
+                "Likes to"+gen('actions'),
+                gen('superlatives')+gen('careers_skillable')+" in the land",
+                "Works as a"+gen('careers'),
+                "Works in"+gen('buildings'),
+                "Works as a"+gen('careers')+" at"+gen('buildings'),
+                "Is missing"+gen('limbs'),
+                "Has a"+gen('ailments')+gen('family'),
+                "Has a"+gen('personalities')+gen('family'),
+                "Sold a"+gen('ailments')+gen('family')+" for"+gen('prices'),
+                "Has a"+gen('family')+" missing"+gen('limbs'),
+                "Has"+gen('limbs_special'),
+                "Has a pet"+gen('animals'),
+                "Best friend is a"+gen('personalities')+gen("animals"),
+                "Recently bought a"+gen('weapons')+" for"+gen('prices'),
+                "Recently bought"+gen('clothing')+" for"+gen('prices'),
+                "Family heirloom is an old"+gen('weapons'),
+                "Family heirloom is an old"+gen('items'),
+                gen('notables'),
+                "Wants to"+gen('dreams'),
+                "Afraid of"+gen('scaries'),
+                gen('relationships')+gen('persons'),
+                gen('actions_past')+gen('items_plus')+" when they were younger",
+                "Often hangs out in"+gen('buildings'),
+                "Does"+gen('actions')+gen('time_day')
+                //TODO UI for search filters
+                //TODO Start out with an item
+            ];
+    </script>
+</body>
+</html>

@@ -11,8 +11,23 @@
         
         <div id='results'></div>
         <script>
-            query = window.location.query;
-            $.get('/api/v1/resources', {tag: query, category: query, name: query}, function(res) {
+            query = window.location.search.substring(1);
+            qarray = query.split('&');
+            tag = "";
+            category = "";
+            query = "";
+            for(var i in qarray) {
+                qitem = qarray[i];
+                qsplit = qitem.split('=');
+                if(qsplit[0] == 'tag')
+                    tag = qsplit[1];
+                if(qsplit[0] == 'category')
+                    category = qsplit[1];
+                if(qsplit[0] == 'q')
+                    query = qsplit[1];
+            }
+            console.log(tag, category, query);
+            $.get('/api/v1/resources', {tag: tag, category: category, name: query}, function(res) {
                 console.log(res, res.results.length);
                 for(index=0;index<res.results.length;index++) {
                     console.log(res.results[index])
