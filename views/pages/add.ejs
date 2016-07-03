@@ -8,31 +8,43 @@
     <% include ../partials/nav.ejs %>
     
     <h1>Add a new resource</h1>
-    We are curating the best DND resources for users to quickly find. If you have a great resource to share, please add it. 
+    <p>We are curating the best DND resources for users to quickly find. If you have a great resource to share, please add it.</p>
     
     <input type='text' placeholder="Title" class='general' id='title'/><br>
-    Give a brief description (no more than 140 characters)<br>
-    <div contenteditable="true" id='description' style='border:solid 1px black'></div>
+    <p>Give a brief description (no more than 140 characters)</p>
+    <div contenteditable="true" id='description'></div>
     <span id='description_char_count'></span>
     <input type="url" placeholder="Url" class='general' id='url' /><br>
     <span class='submission_tag_title'>Tags</span>
-    <script>
-        for(i in tags) {
-            var t = tags[i];
-            document.write(t.name+'<input type="checkbox" class="submission_tag" id="'+t.id+'" />');
-        }
-    </script>
+    <div class='container'>
+        <script>
+            for(i in tags) {
+                var t = tags[i];
+                document.write(t.name+'<input type="checkbox" class="submission_tag" id="'+t.id+'" />');
+            }
+        </script>
+    </div>
     <span class='submission_tag_title'>Categories</span>
-    <script>
-        for(i in categories) {
-            var c = categories[i];
-            document.write(c.name+'<input type="checkbox" class="submission_tag" id="'+c.id+'" />');
-        }   
-        $('#description').on('keydown', function(res) {
-            var dval = $('#description').html();
-            $('#description_char_count').html(dval.length);
-        });
-    </script>
+    <div class='container'>
+        <script>
+            for(i in categories) {
+                var c = categories[i];
+                document.write(c.name+'<input type="checkbox" class="submission_tag" id="'+c.id+'" />');
+            }   
+        
+            function refreshCharCount() {
+                var dval = $('#description').html();
+                var len = dval.length;
+                $('#description_char_count').html(len);
+                if(len > 140) {
+                    $('#description_char_count').css('color', 'red');   
+                } else {
+                    $('#description_char_count').css('color', '');      
+                }
+            }
+            setInterval(refreshCharCount, 300);
+        </script>
+    </div>
     
     <button type="submit" id='submit' class='submission'>Submit</button>
     <script>

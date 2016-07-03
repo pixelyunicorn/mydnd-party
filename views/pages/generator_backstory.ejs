@@ -8,14 +8,15 @@
     <% include ../partials/nav.ejs %>
     
     <h1>Character Backstory Generator</h1>
-    Who is your character? What kind of backstory do they have? Figure that out with this generator. Let it inspire great, complicated characters to make the world that much more immersive. Email "handnf@gmail.com" with any suggestions.
-    <br><br>
-    Click on each underlined phrase to randomly alter it. Click on the add button to add another item to the character's backstory.
+    <p>Who is your character? What kind of backstory do they have? Figure that out with this generator. Let it inspire great, complicated characters to make the world that much more immersive.</p>
+    <p>Click on each underlined phrase to randomly alter it. Click on the add button to add another item to the character's backstory.</p>
+    
+    <button onclick="makesuggestion()" id="suggest_item">Make Suggestion</button>
     
     <div id='backstory_list'>
     
     </div>
-    <button onclick='additem()'>Add</button>
+    <button onclick='additem()' id='add_item'>Add</button>
 
     <style>
         .backstory_tag {
@@ -30,6 +31,20 @@
             color: #777;
             font-weight: 100;  
         }
+        #suggest_item {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;   
+        }
+        #add_item {
+            display: block;
+            margin-left: auto;
+            margin-top: 32px;
+            margin-right: auto;
+            font-size: 15pt;
+            text-transform: uppercase;
+            border: #999 dashed 1px;   
+        }
     </style>
     <script>
         var actions = [
@@ -37,6 +52,9 @@
             ];
         var actions_past = [
                 "stole", "killed", "beat"
+            ];
+        var addictables = [
+                "gambling", "alcohol", "dreamweed", "pedophilia"
             ];
         var ailments = [
                 "blind", "deaf", "dumb", "retarded", "paralyzed", "insomiac", "stupid", "scarred", "crippled", "dying", "feverish", "ill", "dead", "pregnant", "on fire", "suicidal"
@@ -49,7 +67,7 @@
                 "a puppet shop", "a library", "a school", "the nearby castle", "a bookstore", "an apothecary shop", "a nearby alley", "a local tavern"
             ];
         var careers = [
-                "carpenter", "cooper", "messenger", "smith", "farmer", "cleaner", "prostitute", "knight", "adventurer", "bard", "thief", "merchant", "artist", "painter", "juggler", "street performer", "professor", "nun", "priest", "engineer", "writer", "poet", "baker", "butcher", "fisherman", "maester", "elder", "mayor", "former king", "queen", "former queen", "prince", "priestess", "princess", "athlete", "hero", "heroine", "animal tamer", "pirate", "ninja", "wizard", "witch", "warlock", "guard", "executioner", "hunter", "farmer", "hobo", "drunk", "apothecary", "herbalist", "soldier", "archer", "swordsman", "highwayman", "chef", "doctor", "murder-hobos"
+                "carpenter", "cooper", "messenger", "smith", "farmer", "cleaner", "prostitute", "knight", "adventurer", "bard", "thief", "merchant", "artist", "painter", "juggler", "street performer", "professor", "nun", "priest", "engineer", "writer", "poet", "baker", "butcher", "fisherman", "maester", "elder", "mayor", "former king", "queen", "former queen", "prince", "priestess", "princess", "athlete", "hero", "heroine", "animal tamer", "pirate", "ninja", "wizard", "witch", "warlock", "guard", "executioner", "hunter", "farmer", "hobo", "drunk", "apothecary", "herbalist", "soldier", "archer", "swordsman", "highwayman", "chef", "doctor", "murder-hobos", "barkeep", "swinder"
             ];
         var careers_skillable = [
                 "carpenter", "smith", "cooper", "pirate", "swordsman", "knight"
@@ -91,7 +109,7 @@
                 "much gold", "a few copper pieces", "not much", "a bargain", "cheaper than expected", "too much"
             ];
         var relationships = [
-                "in love with", "hates", "racist against"
+                "in love with", "hates", "racist against", "afraid of"
             ];
         var scaries = [
                 "spiders", "heights", "letting friends down", "snakes", "bees", "insects"
@@ -109,6 +127,7 @@
         var map = {
             actions: actions,
             actions_past: actions_past,
+            addictables: addictables,
             ailments: ailments,
             animals: animals,
             buildings: buildings,
@@ -218,10 +237,25 @@
                 gen('relationships')+gen('persons'),
                 gen('actions_past')+gen('items_plus')+" when they were younger",
                 "Often hangs out in"+gen('buildings'),
-                "Does"+gen('actions')+gen('time_day')
-                //TODO UI for search filters
-                //TODO Start out with an item
+                "Does"+gen('actions')+gen('time_day'),
+                "Addicted to"+gen('addictables')
             ];
+        
+        additem();
+        
+        function makesuggestion() {
+            var value = prompt("What kind of backstory would you like to see?");               if(value.length == 0)
+                return;
+            $.ajax({
+                url: '/generators/backstory/suggest',
+                type: 'PUT',
+                data: {suggestion: value},
+                success: function(result) {
+                    // Do something with the result
+                    alert("Thanks!"); 
+                }
+            });
+        }
     </script>
 </body>
 </html>

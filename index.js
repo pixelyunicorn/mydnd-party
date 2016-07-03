@@ -79,6 +79,16 @@ app.get('/generators/:name', function(request, response) {
         response.render('pages/generator_backstory');
     return;
 });
+app.put('/generators/:name/suggest', function(request, response) {
+    console.log(request);
+    var name = request.params.name;
+    var suggestion = request.body.suggestion;
+    console.log(name, suggestion);
+    db.ref('/generators/backstory/suggestions').push({
+        value: suggestion 
+    });
+    response.send({res: 200, msg: "OK"});
+});
 
 function returnSnapshot(snap) {
     //        console.log(snapshot);
@@ -95,13 +105,6 @@ function returnSnapshot(snap) {
 //?name=<CAMPAIGN_NAME>
 app.get('/api/v1/campaigns', function(request, response) {
     name = mysql_validate(request.params.name) || "";
-    /*pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        console.log("select * from user_redirects WHERE campaign LIKE '%"+name+"'%");
-        client.query("select * from user_redirects WHERE campaign LIKE '%"+name+"%'", function(err, res) {
-            console.error(err);
-            response.send({results: res.rows, err: err});
-        });
-    }); */
     db.ref('/campaigns').orderByChild('name').startAt(name).on("value", function(snapshot) {
         returnSnapshot(snapshot);
   });
@@ -111,11 +114,6 @@ app.get('/api/v1/campaigns', function(request, response) {
 app.post('/api/v1/campaigns', function(request, response) {
     var campaignName = key_validate(request.body.name);
     var url = url_validate(request.body.url);
-    /*pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-        client.query("insert into user_redirects (campaign, url) values ('"+campaignName+"', '"+url+"')", function(err, res) {
-            response.send({res: 200, err: err});
-        });
-    });*/
     var campaignsRef = db.ref('/campaigns');
     campaignsRef.push({
         name: request.body.name,
