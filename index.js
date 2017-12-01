@@ -75,8 +75,18 @@ app.get('/search', function(request, response) {
 // Search results
 app.get('/generators/:name', function(request, response) {
     var name = request.params.name;
-    if(name == "backstory")
-        response.render('pages/generator_backstory');
+    var page = 'pages/index';
+    switch(name) {
+        case "backstory":
+        case "character":
+            page = 'pages/generator_backstory';
+            break;
+        case "town":
+        case "fantasytown":
+            page = 'pages/generator_town';
+            break;
+    }
+    response.render(page);
     return;
 });
 app.put('/generators/:name/suggest', function(request, response) {

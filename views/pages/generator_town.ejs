@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    
+    <h1>Fantasy Town Name Generator</h1>
+    <p>This generates a variety of town names. It uses a simple process of combining two English words together.</p>
+    <p>Click on each underlined phrase to randomly alter it.</p>
+    
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
+    
+    <div id='backstory_list'>
+    
+    </div>
+
+    <script>
+        var prefix = ["Red", "Blue", "Green", "White", "Gray", 
+            "Brown", "Black", "Yellow",
+            "Cerulean", "Vermillion", "Saffron", "Indigo",
+            "Turquoise",
+
+            "North", "West", "South", "East",
+
+            "Acorn", "Apple", "Berry", "Cherry", "Corn", "Grape", "Grist",
+            "Mint", "Olive", "Wine",
+
+            "Sun", "Moon", "Star",
+
+            "Ever", "Long",
+
+            "Small", "Large",
+
+            "Clover", "Lichen", "Moss", "Peats", "Rose",
+            "Mahogany", "Maple", "Oak", "Palm", "Pine", "Timber", "Willow",
+            
+            "Fort",
+
+            "Canary", "Dove", "Eagle", "Goose", "Hawk", "Swan",
+            "Bear", "Deer",  "Elk", "Fox", "Hog", "Otter", 
+            "Owl", "Rabbit", "Snake", "Tortoise", "Turtle", "Whale", "Wolf",
+            "Bass", "Cod", "Minnow", "Salmon", "Shark", "Trout",
+            "Clam", "Oyster",
+
+            "Angel", "Demon", "Dragon",
+
+            "Harp",
+
+            "Amber", "Amethyst", "Gold", "Ruby", "Emerald", "Silver", "Stone", "Pearl", "Diamond",
+            "Crystal", "Sapphire",
+            "Brass", "Bronze", "Coal", "Copper", "Pewter", "Tin", "Tungsten",
+
+            "Cinder", "Ember", "Fire", "Kindling", "Ice", "Rain", "Snow",
+
+            "Cursed", "Dark", "Dead", "Needle",
+
+            "Basin", "River",
+
+            "Clay", "Grass", "Marble", "Mud", "Prarie", "Sand",
+
+            "Spring", "Summer", "Autumn", "Winter",
+
+            "Wind", "Wynd",
+        
+            "Arrow", "Mid", "New", "Pure", "Ra", "Va"];
+
+        var suffix = ["arbor", "canyon", "covert", "gorge", "swamp", "valley",
+
+            "bay", "beach", "beck", "brook", "falls", "ford", "gulf", "pond", "shore",
+            "springs", "wharf", "stream", "lake", "marsh", "water",
+
+            "field", "flower", "garden", "grass", "grove", "root", "wilds", "wood",
+
+            "boulder", "brink", "cliff", "hill", "peak", "rock", "stone", "wich",
+
+            "abbey", "boro", "gate", "hall", "harbor", "landing", "lodge", "outpost", "park", "pass",
+            "pier", "polis", "port", "town", "village", "wharf",
+
+            "burn", "scar", "skin", "tusk",
+
+            "fort", "hold", "watch", "wall",
+
+            "well", "mill",
+
+            "dale",
+
+            "cave", "cove", "ditch", "rill",
+
+            "acre", "barrow", "burrow", "bury", "cross", "nest",
+
+            "ark", "bellow", "bluff", "cairn", "crest", "edge", "fair", "front", "glen", "helm",
+            "hollow", "hurst", "mere", "moor", "mouth", "mulch", "point", "post", "rest", "shaw", 
+            "shire", "spire", "thorpe", "tooth", "valley", "wallow", "ward", "wick"];
+        
+        var map = {
+            prefix: prefix,
+            suffix: suffix
+        };
+        
+        var lines = [
+                `${gen('prefix')}${gen('suffix')}`,
+                `${gen('prefix')} ${title(gen('suffix'))}`
+            ];
+        
+        additem();
+    </script>
+</body>
+</html>
