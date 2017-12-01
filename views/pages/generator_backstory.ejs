@@ -14,11 +14,11 @@
     
     <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
     
-    <div id='backstory_list'>
+    <div id='dynamic_list'>
     
     </div>
 
-    <button onclick='additem()' id='add_item'>Add</button>
+    <button onclick='additem(true)' id='add_item'>Add</button>
 
     <script>
         const actions = [
@@ -206,7 +206,7 @@
                 `Has a fear of ${gen('fearables')}`
             ];
         
-        additem();
+        additem(true);
     </script>
 </body>
 </html>

@@ -22,7 +22,7 @@ function refreshRange(element, key, min, max) {
 }
 
 already_added_items = [];
-function additem() {
+function additem(enableX) {
     index = gri(lines);
     if(already_added_items.length > mapSize()) {
         alert("Sorry, no more backstory items exist right now!");
@@ -35,13 +35,15 @@ function additem() {
         return;
     }   
     already_added_items.push(index);
-    $('#backstory_list').append(`<span class='dynamic_item'><span class='dynamic_tag_remove' onclick='release(this, ${index}'>X</span>${lines[index]}</span>`);   
+    $('#dynamic_list').append(`<span class='dynamic_item'>
+        ${(enableX) ? `<span class='dynamic_tag_remove' onclick='release(this, ${index})'>X</span>` : ""}
+        ${lines[index]}</span>`);   
 }
 
 function mapSize() {
     var inp = 0;
     for(i in map) {
-        inp++;   
+        inp++;
     }
     return inp;
 }
