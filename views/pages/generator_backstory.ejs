@@ -17,39 +17,40 @@
     <div id='backstory_list'>
     
     </div>
+
     <button onclick='additem()' id='add_item'>Add</button>
 
     <script>
-        var actions = [
+        const actions = [
                 "skip", "whistle", "sing", "wrestle", "play sports", 
                 "flirt with others", "read", "spend time alone", "drink",
                 "fight", "kill things", "bully", "steal", "hunt", "sleep",
                 "dance", "meditate"
             ];
-        var actions_past = [
+        const actions_past = [
                 "stole", "killed", "beat"
             ];
-        var addictables = [
+        const addictables = [
                 "gambling", "alcohol", "dreamweed", "medicine", "pedophilia"
             ];
-        var ailments = [
+        const ailments = [
                 "blind", "deaf", "dumb", "retarded", "paralyzed", "insomiac", 
                 "stupid", "scarred", "crippled", "dying", "feverish", "ill", 
                 "dead", "pregnant", "on fire", "suicidal"
             ];
-        var animals = [
+        const animals = [
                 "raccoon", "horse", "cat", "bat", "dog", "owl", "raven", 
                 "pigeon", "cow", "sheep", "lamb", "deer", "wolf", "bear", 
                 "squirrel", "chipmunk", "chicken", "fish", "shark", "whale", 
                 "bird"
             ];
         
-        var buildings = [
+        const buildings = [
                 "a puppet shop", "a library", "a school", "the nearby castle", 
                 "a bookstore", "an apothecary shop", "a nearby alley", 
                 "a local tavern"
             ];
-        var careers = [
+        const careers = [
                 "carpenter", "cooper", "messenger", "smith", "farmer", "cleaner",
                 "prostitute", "knight", "adventurer", "bard", "thief", "merchant",
                 "artist", "painter", "juggler", "street performer", "professor",
@@ -62,17 +63,17 @@
                 "swordsman", "highwayman", "chef", "doctor", "murder-hobos", 
                 "barkeep", "swinder"
             ];
-        var careers_skillable = [
+        const careers_skillable = [
                 "carpenter", "smith", "cooper", "pirate", "swordsman", "knight"
             ];
-        var clothing = [
+        const clothing = [
                 "some socks", "some shoes", "a hat", "a shirt", "some pants", 
                 "some undergarments", "boots", "helmet", "armor", "gloves",
             ];  
-        var dreams = [
+        const dreams = [
                 "find love", "gain power", "travel", "fly"
             ];
-        var family = [
+        const family = [
                 "brother", "sister", "aunt", "uncle", "husband", "wife", "cousin", 
                 "nephew", "niece", "son", "daughter", "child", "grandfather", 
                 "grandmother", "grandson", "granddaughter", "great uncle", 
@@ -80,70 +81,70 @@
                 "great grandson", "great granddaughter", "dog", "cat", "horse",
                 "cow", "chicken"
             ];
-        var fearables = [
+        const fearables = [
                 "the dark", "clowns", "puppets", "snakes", "spiders"
             ];
-        var items = [
+        const items = [
                 "ring", "magic ring", "bracelet", "magic bracelet", "diamond",
                 "amulet"
             ];  
-        var items_plus = items.concat([
+        const items_plus = items.concat([
                 "frog", "bird", "rabbit", "friend", "pet", "dog"
             ])
-        var limbs = [
+        const limbs = [
                 "a hand", "an arm", "nose", "an ear", "both hands", 
                 "both arms", "both ears", "a foot", "both feet", "a leg",
                 "both legs", "head", "toenail", "fingernail", "liver", "lung",
                 "kidney", "genitalia", "hair", "a finger", "a toe"
             ];
-        var limbs_special = [
+        const limbs_special = [
                 "eleventh toe", "eleventh finger", "mustache", "beard", 
                 "sideburns", "scar", "ambiguous genetalia", 
                 "double jointed elbow", "swollen ankles"
             ];
-        var locations = [
+        const locations = [
                 "river", "forest", "mountain", "cave", "tavern"
             ];
-        var notables = [
+        const notables = [
                 "Birthday is today", "A wanted criminal", 
                 "Whistles folk tunes", "Natural born leader",
                 "Experiences nightmares"
             ];
-        var persons = [
+        const persons = [
                 "apothecary", "neighbor", "elves", "imps", "orcs"
             ];
-        var personalities = [
+        const personalities = [
                 "thirsty", "angry", "depressed", "nilhistic", "existenstial",
                 "humorless", "lowbrow", "obnoxious", "arrogant", "sneaky",
                 "alcoholic", "gullible", "horny", "greedy", "hungry",
                 "intelligent", "easily excitable", "poor", "happy", "friendly",
                 "sarcastic", "selfish", "nonreligious", "virgin", "charismatic"
             ];
-        var prices = [
+        const prices = [
                 "much gold", "a few copper pieces", "not much", "a bargain", 
                 "cheaper than expected", "too much", "everything they owned"
             ];
-        var relationships = [
+        const relationships = [
                 "in love with", "hates", "racist against", "afraid of"
             ];
-        var scaries = [
+        const scaries = [
                 "spiders", "heights", "letting friends down", "snakes", 
                 "bees", "insects"
             ];
-        var superlatives = [
+        const superlatives = [
                 "best", "worst", "smartest", "stupidest", "strongest", 
                 "weakest", "scariest"
             ];
-        var time_day = [
+        const time_day = [
                 "first thing in the morning", "before they go to sleep", 
                 "at noon", "at dawn", "at dusk"
             ];
-        var weapons = [
+        const weapons = [
                 "shield", "sword", "dagger", "knife", "spear", "bow", 
                 "masterwork sword"
             ];
         
-        var map = {
+        const map = {
             actions: actions,
             actions_past: actions_past,
             addictables: addictables,
@@ -172,8 +173,8 @@
             weapons: weapons
         };
         
-        var lines = [
-                `Is ${genNum([0, 150])} years old`,
+        const lines = [
+                `Is ${genNumber([0, 150])} years old`,
                 `Is ${gen('ailments')}`,
                 `Is ${gen('personalities')}`,
                 `Likes to walk to the nearby ${gen('locations')}`,

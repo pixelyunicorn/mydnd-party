@@ -19,7 +19,7 @@
     </div>
 
     <script>
-        var prefix = ["Red", "Blue", "Green", "White", "Gray", 
+        const prefix = ["Red", "Blue", "Green", "White", "Gray", 
             "Brown", "Black", "Yellow",
             "Cerulean", "Vermillion", "Saffron", "Indigo",
             "Turquoise",
@@ -68,7 +68,7 @@
         
             "Arrow", "Mid", "New", "Pure", "Ra", "Va"];
 
-        var suffix = ["arbor", "canyon", "covert", "gorge", "swamp", "valley",
+        const suffix = ["arbor", "canyon", "covert", "gorge", "swamp", "valley",
 
             "bay", "beach", "beck", "brook", "falls", "ford", "gulf", "pond", "shore",
             "springs", "wharf", "stream", "lake", "marsh", "water",
@@ -96,12 +96,12 @@
             "hollow", "hurst", "mere", "moor", "mouth", "mulch", "point", "post", "rest", "shaw", 
             "shire", "spire", "thorpe", "tooth", "valley", "wallow", "ward", "wick"];
         
-        var map = {
+        const map = {
             prefix: prefix,
             suffix: suffix
         };
         
-        var lines = [
+        const lines = [
                 `${gen('prefix')}${gen('suffix')}`,
                 `${gen('prefix')} ${title(gen('suffix'))}`
             ];
