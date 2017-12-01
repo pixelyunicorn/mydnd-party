@@ -45,14 +45,12 @@ function mapSize() {
     return inp;
 }
 
-keyRange = [];
-function gen(key, keyRange) {
-    keyRange = this.keyRange;
-    if(key == "number") {
-        return `<span class='dynamic_tag' onclick='refresh(this, \"${key}\")'>${Math.floor(Math.random()*keyRange[1]-keyRange[0])}</span>`;
-    } else {
-        return `<span class='dynamic_tag' onclick='refresh(this, \"${key}\")'>${gr(map[key])}</span>`;   
-    }
+function gen(key) {
+    return `<span class='dynamic_tag' onclick='refresh(this, \"${key}\")'>${gr(map[key])}</span>`;   
+}
+
+function genNumber(keyRange) {
+    return `<span class='dynamic_tag' onclick='refresh(this, \"${key}\")'>${Math.floor(Math.random()*keyRange[1]-keyRange[0])}</span>`;
 }
 
 function title(str) {

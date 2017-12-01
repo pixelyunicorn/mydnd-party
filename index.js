@@ -89,6 +89,25 @@ app.get('/generators/:name', function(request, response) {
     response.render(page);
     return;
 });
+// Custom tables
+app.get('/tables/:name', function(request, response) {
+    var name = request.params.name;
+    var page = 'pages/index';
+    switch(name) {
+        case "camp":
+        case "camping":
+        case "nighttime":
+        case "overnight":
+        case "watch":
+            page = 'pages/table_nighttime';
+            break;
+        case "weather":
+            page = 'pages/table_weather';
+            break;
+    }
+    response.render(page);
+    return;
+});
 app.put('/generators/:name/suggest', function(request, response) {
     console.log(request);
     var name = request.params.name;

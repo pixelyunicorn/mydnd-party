@@ -4,6 +4,7 @@ h1 {
 h2 {
     display: inline-block;   
     vertical-align: sub;
+    margin-top: 25px;
 }
 nav {
     background-color: #555;

@@ -79,6 +79,9 @@
                 "great grandson", "great granddaughter", "dog", "cat", "horse",
                 "cow", "chicken"
             ];
+        var fearables = [
+                "the dark", "clowns", "puppets", "snakes", "spiders"
+            ];
         var items = [
                 "ring", "magic ring", "bracelet", "magic bracelet", "diamond",
                 "amulet"
@@ -102,7 +105,8 @@
             ];
         var notables = [
                 "Birthday is today", "A wanted criminal", 
-                "Whistles folk tunes", "Natural born leader"
+                "Whistles folk tunes", "Natural born leader",
+                "Experiences nightmares"
             ];
         var persons = [
                 "apothecary", "neighbor", "elves", "imps", "orcs"
@@ -150,6 +154,7 @@
             clothing: clothing, 
             dreams: dreams,
             family: family,
+            fearables: fearables,
             items: items,
             items_plus: items_plus,
             limbs: limbs,
@@ -167,7 +172,7 @@
         };
         
         var lines = [
-//                "Is"+gen('number', [0,150])+" years old",
+                `Is ${genNum([0, 150])} years old`,
                 `Is ${gen('ailments')}`,
                 `Is ${gen('personalities')}`,
                 `Likes to walk to the nearby ${gen('locations')}`,
@@ -195,7 +200,8 @@
                 `${gen('actions_past')} ${gen('items_plus')} when they were younger`,
                 `Often hangs out in ${gen('buildings')}`,
                 `Does ${gen('actions')} ${gen('time_day')}`,
-                `Addicted to ${gen('addictables')}`
+                `Addicted to ${gen('addictables')}`,
+                `Has a fear of ${gen('fearables')}`
             ];
         
         additem();
