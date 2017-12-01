@@ -14,10 +14,11 @@ function release(element, index) {
 }
 
 function refresh(element, key) {
-    if(key == "number")
-        $(element).html(Math.floor(Math.random()*keyRange[1]-keyRange[0]));
-    else
-        $(element).html(gr(map[key]));   
+    $(element).html(gr(map[key]));   
+}
+
+function refreshRange(element, key, min, max) {
+    $(element).html(Math.floor(Math.random()* max - min));
 }
 
 already_added_items = [];
@@ -49,8 +50,8 @@ function gen(key) {
     return `<span class='dynamic_tag' onclick='refresh(this, \"${key}\")'>${gr(map[key])}</span>`;   
 }
 
-function genNumber(keyRange) {
-    return `<span class='dynamic_tag' onclick='refresh(this, \"${key}\")'>${Math.floor(Math.random()*keyRange[1]-keyRange[0])}</span>`;
+function genNumber(keyRange, key) {
+    return `<span class='dynamic_tag' onclick='refreshRange(this, \"${key || "number"}\", ${keyRange[0]}, ${keyRange[1]})'>${Math.floor(Math.random()*keyRange[1]-keyRange[0])}</span>`;
 }
 
 function title(str) {
