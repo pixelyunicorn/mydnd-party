@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+    <style>
+        #time, #moonphase {
+            font-size: 48pt;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    
+    <h1>Time tracker</h1>
+    <p>
+        When players go through an adventure, the question of time comes up a lot.
+        This tool can make it easy to manage in-game time by keeping track of it
+        and allowing for quick shortcuts.
+    </p>
+    
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
+    
+    <div id='content'>
+        <div>
+            <strong>Start Time</strong>
+            <button class='start' data-time='21600'>Early Morning</button>
+            <button class='start' data-time='28800'>Mid-Morning</button>
+            <button class='start' data-time='43200'>Noon</button>
+            <button class='startCustom'>Input time</button>
+        </div>
+        <div>
+            <strong>Sunset</strong>
+            <select id='sunset'>
+                <option value='[25200, 61200]'>7am, 5pm (Winter)</option>
+                <option value='[21600, 68400]'>6am, 7pm (Spring/Autumn)</option>
+                <option value='[18000, 75600]'>5am, 9pm (Summer)</option>
+            </select>
+        </div>
+        <div class='center'>
+            <strong>The current time is</strong><br>
+            <span id='time'></span><br>
+            <strong id='sunset_diff'></strong>
+        </div>
+        <div>
+            <button class='elapse' data-duration='900'>Walk city block</button>
+            <button class='elapse' data-duration='600'>Travel mile on a horse</button>
+            <button class='elapse' data-duration='1200'>Walk a mile on a trail</button>
+            <button class='elapse' data-duration='2400'>Walk a mile on rough terrain</button><br>
+            <button class='elapse' data-duration='1800'>Eat Meal (Light)</button>
+            <button class='elapse' data-duration='3600'>Eat Meal (Medium)</button>
+            <button class='elapse' data-duration='10800'>Eat Meal (Feast)</button>
+            <button class='elapse' data-duration='900'>Short chat</button>
+            <button class='elapse' data-duration='1800'>Detailed conversation</button>
+            <button class='elapse' data-duration='3600'>Planning</button>
+            <button class='elapse' data-duration='1800'>Setup camp</button>
+            <button class='elapseCustom'>Input time</button>
+        </div>
+    </div>
+
+    <h1>Moon Phase Tracker</h1>
+    <p>
+        The moon will go through a full cycle in roughly 28 days. This tool makes it easy to keep track of
+        the phase of the moon if that is important.
+        <table>
+            <thead>
+                <tr>
+                    <td>Value</td>
+                    <td>Moon Phase</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>28, 0 - 1</td>
+                    <td>New Moon</td>
+                </tr>
+                <tr>
+                    <td>2 - 4</td>
+                    <td>Waxing Crescent</td>
+                </tr>
+                <tr>
+                    <td>5 - 8</td>
+                    <td>1Q Half Moon</td>
+                </tr>
+                <tr>
+                    <td>9 - 12</td>
+                    <td>Waxing Gibbous</td>
+                </tr>
+                <tr>
+                    <td>13 - 15</td>
+                    <td>Full Moon</td>
+                </tr>
+                <tr>
+                    <td>16 - 19</td>
+                    <td>Waning Gibbous</td>
+                </tr>
+                <tr>
+                    <td>20 - 24</td>
+                    <td>3Q Half Moon</td>
+                </tr>
+                <tr>
+                    <td>25 - 27</td>
+                    <td>Waning Crescent</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class='center'>
+            <strong>The current moon phase is</strong><br>
+            <span id='moonphase'></span><br>
+            <strong id='moon_state'></strong>
+        </div>
+        <button class='moonSet'>Set current phase</button>
+    </p>
+
+    <script>
+        let currTime = 0;
+        let currMoon = 0;
+        const moonMap = [
+            "New Moon",
+            "New Moon",
+            "Waxing Crescent",
+            "Waxing Crescent",
+            "Waxing Crescent",
+            "Half Moon",
+            "Half Moon",
+            "Half Moon",
+            "Half Moon",
+            "Waxing Gibbous",
+            "Waxing Gibbous",
+            "Waxing Gibbous",
+            "Waxing Gibbous",
+            "Full Moon",
+            "Full Moon",
+            "Full Moon",
+            "Waning Gibbous",
+            "Waning Gibbous",
+            "Waning Gibbous",
+            "Waning Gibbous",
+            "Half Moon",
+            "Half Moon",
+            "Half Moon",
+            "Half Moon",
+            "Waning Crescent",
+            "Waning Crescent",
+            "Waning Crescent",
+            "New Moon",
+        ]
+        // Add event listeners
+        document.querySelectorAll('button.start').forEach((el) => {
+            el.onclick = () => { start(parseInt(el.dataset.time)) };
+        });
+        document.querySelector('.startCustom').onclick = selectStart;
+
+        document.querySelector('#sunset').onchange = updateLabel;
+
+        document.querySelectorAll('button.elapse').forEach((el) => {
+            el.onclick = () => { elapse(parseInt(el.dataset.duration)) };
+        });
+        document.querySelector('.elapseCustom').onclick = selectElapse;
+        document.querySelector('.moonSet').onclick = selectMoon;
+
+        /**
+         *  Set the time.
+         */
+        function start(timeSec) {
+            currTime = timeSec;
+            updateLabel();
+        }
+
+        /**
+         * User inputs time
+         */
+        function selectStart() {
+            const seconds = parseInt(prompt('Enter the desired time in seconds', '21600'));
+            start(seconds);
+        }
+
+        /**
+         * User inputs delta
+         */
+         function selectElapse() {
+            const seconds = parseInt(prompt('Enter the desired delta in seconds', '900'));
+            elapse(seconds);
+        }
+
+        /**
+         * Updates time by a given amount.
+         */ 
+        function elapse(timeDelta) {
+            currTime += timeDelta;
+            updateLabel();
+        }
+
+        /**
+         * Updates the information displayed
+         */
+        function updateLabel() {
+            // Display the time
+            if (currTime >= 24 * 60 * 60) {
+                // Update moon phase automatically
+                currMoon = ((currMoon + 1) % 28); 
+            }
+            currTime = (currTime % (24 * 60 * 60)); 
+            const hour = Math.floor(currTime / 60 / 60);
+            const minutes = Math.floor((currTime - hour * 3600) / 60);
+            document.querySelector('#time').innerHTML = `${hour}:${(minutes < 10) ? '0' + minutes : minutes}`;
+
+            // Display sun status
+            const suntimes = JSON.parse(document.querySelector('#sunset').value);
+            const sunrise = suntimes[0];
+            const sunset = suntimes[1];
+            const sunrise_diff = sunrise - currTime; // In seconds
+            const sunset_diff = sunset - currTime; // In seconds
+            if (sunrise_diff > 60 * 60) {
+                // Sunrise in more than one hour
+                document.querySelector('#sunset_diff').innerHTML = `The sun has set. Sunrise is in <b>${Math.round(sunrise_diff / 60 / 60)} hours</b>`;
+            } else if (sunrise_diff > 0) {
+                document.querySelector('#sunset_diff').innerHTML = `Sunrise is in <b>${(sunrise_diff / 60)} minutes</b>.`;
+            } else if (sunset_diff > 60 * 60) {
+                // More than one hour
+                document.querySelector('#sunset_diff').innerHTML = `Sunset is in <b>${Math.round(sunset_diff / 60 / 60)} hours</b>.`;
+            } else if (sunset_diff > 0) {
+                // Within the hour
+                document.querySelector('#sunset_diff').innerHTML = `Sunset is in <b>${(sunset_diff / 60)} minutes</b>.`;
+            } else if (sunrise_diff < 0) {
+                // Already nighttime
+                document.querySelector('#sunset_diff').innerHTML = 'The sun has set.';
+            }
+            document.querySelector('#moonphase').innerHTML = moonMap[currMoon];
+            document.querySelector('#moon_state').innerHTML = `The moon is on day ${currMoon} of its cycle.`;
+        }
+
+        /**
+         * User inputs delta
+         */
+         function selectMoon() {
+            const phase = parseInt(prompt('Enter the desired moon phase as a number', '14'));
+            currMoon = phase;
+            updateLabel();
+        }
+
+        updateLabel();
+    </script>
+</body>
+</html>

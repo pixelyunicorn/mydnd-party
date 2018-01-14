@@ -47,7 +47,6 @@ app.get('/search', function(request, response) {
 });
 
 // Custom generators
-// Search results
 app.get('/generators/:name', function(request, response) {
     var name = request.params.name;
     var page = 'pages/index';
@@ -70,6 +69,7 @@ app.get('/generators/:name', function(request, response) {
     response.render(page);
     return;
 });
+
 // Custom tables
 app.get('/tables/:name', function(request, response) {
     var name = request.params.name;
@@ -84,6 +84,20 @@ app.get('/tables/:name', function(request, response) {
             break;
         case "weather":
             page = 'pages/table_weather';
+            break;
+    }
+    response.render(page);
+    return;
+});
+
+// Custom tools
+app.get('/tools/:name', function(request, response) {
+    var name = request.params.name;
+    var page = 'pages/index';
+    switch(name) {
+        case 'time':
+        case 'clock':
+            page = 'pages/time_tracker';
             break;
     }
     response.render(page);
