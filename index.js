@@ -24,6 +24,16 @@ app.get('/add', function(request, response) {
     return;
 });
 
+app.get('/loganland', function (req, res) {
+    res.redirect('http://terranor-wiki.herokuapp.com');
+    return;
+});
+
+app.get('/felkerland', function (req, res) {
+    res.redirect('http://felker-rpg.herokuapp.com/');
+    return;
+});
+
 // Campaign shortlink
 app.get('/campaign', function(request, response) {
     response.render('pages/campaign');
@@ -49,6 +59,12 @@ app.get('/generators/:name', function(request, response) {
         case "town":
         case "fantasytown":
             page = 'pages/generator_town';
+            break;
+        case "inn":
+        case "tavern":
+        case "pub":
+        case "bar":
+            page = 'pages/generator_inn';
             break;
     }
     response.render(page);

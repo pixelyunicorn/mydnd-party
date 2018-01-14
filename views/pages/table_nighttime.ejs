@@ -29,6 +29,7 @@
 
     <select id='environment'>
         <option value="woods">Woods</option>
+        <option value="farm">Farmland</option>
     </select>
     <button onclick='reroll(100)' class='reroll'>Re-Roll</button>
     <button onclick='reroll(1000)' class='reroll'>Roll Advanced Table</button>
@@ -54,6 +55,46 @@
         addToLookupTable('Boar', 91, 99, 'woods');
         addToLookupTable('Boar', 901, 1000, 'woods');
         addToLookupTable('Forest fire', 100, 100, 'woods');
+
+        addToLookupTable('Nothing', 0, 40, 'farm');
+        addToLookupTable('Nothing', 101, 400, 'farm');
+        addToLookupTable('Fox', 41, 45, 'farm');
+        addToLookupTable('Fox', 401, 450, 'farm');
+        addToLookupTable('Wolf', 46, 50, 'farm');
+        addToLookupTable('Wolf', 451, 500, 'farm');
+        addToLookupTable('Horse', 51, 60, 'farm');
+        addToLookupTable('Horse', 501, 550, 'farm');
+        addToLookupTable('Wild Horse', 551, 575, 'farm');
+        addToLookupTable('Horse with broken leg', 576, 580);
+        addToLookupTable('Baby horse', 581, 590);
+        addToLookupTable('Parent horse with child', 591, 600);
+        addToLookupTable('Skunk', 61, 65, 'farm');
+        addToLookupTable('Skunk', 601, 649, 'farm');
+        addToLookupTable('Angry skunk', 650, 650, 'farm');
+        addToLookupTable('Cow', 66, 70, 'farm');
+        addToLookupTable('Cow', 651, 695, 'farm');
+        addToLookupTable('Angry bull', 696, 700, 'farm');
+        addToLookupTable('Chicken', 71, 75, 'farm');
+        addToLookupTable('Chicken', 701, 750, 'farm');
+        addToLookupTable('Rooster', 76, 80, 'farm');
+        addToLookupTable('Rooster', 751, 800, 'farm');
+        addToLookupTable('Wild pig', 81, 84, 'farm');
+        addToLookupTable('Wild pig', 801, 840, 'farm');
+        addToLookupTable('Sheep', 85, 88, 'farm');
+        addToLookupTable('Sheep', 841, 880, 'farm');
+        addToLookupTable('Sheep dog', 89, 90, 'farm');
+        addToLookupTable('Sheep dog', 881, 898, 'farm');
+        addToLookupTable('Pregnant sheep dog', 899, 899, 'farm');
+        addToLookupTable('Sheep dog with rabies', 900, 900, 'farm');
+        addToLookupTable('Bat', 91, 95, 'farm');
+        addToLookupTable('Bat', 901, 930, 'farm');
+        addToLookupTable('Vampire bat', 931, 940, 'farm');
+        addToLookupTable('Swarm of bats', 941, 950, 'farm');
+        addToLookupTable('Cat', 96, 98, 'farm');
+        addToLookupTable('Cat', 951, 980, 'farm');
+        addToLookupTable('Mouse', 99, 100, 'farm');
+        addToLookupTable('Mouse', 981, 990, 'farm');
+        addToLookupTable('Rat', 991, 1000, 'farm');
 
         function reroll(length) {
             let environment = document.querySelector('#environment').value;

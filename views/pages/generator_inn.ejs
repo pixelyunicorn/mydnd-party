@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+    <script src="/scripts/generators.js"></script>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    
+    <h1>Inn Name Generator</h1>
+    <p>This generates a variety of names for a local tavern or inn. It uses a simple process of combining two English words together.</p>
+    <p>Click on each underlined phrase to randomly alter it.</p>
+    
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
+    
+    <div id='dynamic_list'>
+    
+    </div>
+
+    <script>
+        const adjective = [
+            'Sandy', 'Rusty', 'Rocky', 'Dirty', 'Muddy', 'Swampy',
+            'Blue', 'Green', 'Red',
+            'Tired', 'Angry', 'Somber', 'Melancholy', 'Lonely', 'Happy',
+            'Quiet', 'Serene', 'Pacific',
+            'Dark', 'Dead', 'Decaying', 'Bloody', 'Night',
+            'Mystical', 'Light', 'Sacred',
+            'Fiery', 'Sunny', 'Dry', 'Solar',
+            'Hunting', 'Playing', 'Laughing',
+            'Wise', 'Charismatic', 'Strong', 'Intelligent', 'Dexterous', 'Healthy',
+            'Smart', 'Dumb',
+            'Childish',
+            'Hungry', 'Musical', 'Thirsty',
+            'Brave', 'Courageous', 'Aggressive', 'Passive'
+        ];
+
+        const noun = [
+            'Axe', 'Sword', 'Shield',
+            'Spoon', 'Fork', 'Knife',
+            'Tuna', 'Bass', 'Salmon', 'Shark', 'Fish',
+            'Boar', 'Wolf', 'Fox', 'Bear',
+            'Bull', 'Stallion',
+            'Devil', 'Demon', 'Dragon', 'Pixie', 'Fairy', 'Gnome',
+            'Guild', 'Club', 'Tavern', 'Inn', 'Pub', 'Bar', 'House'
+        ];
+        
+        const map = {
+            adjective: adjective,
+            noun: noun
+        };
+        
+        const lines = [
+                `The ${gen('adjective')} ${gen('noun')}`
+            ];
+        
+        additem(false);
+    </script>
+</body>
+</html>
