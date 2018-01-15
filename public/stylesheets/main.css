@@ -1,3 +1,10 @@
+* {
+    transition:  all 0.5s;
+}
+body {
+    margin: 0px;
+    margin-top: 80px;
+}
 h1 {
     margin-left:64px;   
 }
@@ -11,16 +18,20 @@ nav {
     color: #09f;
     margin-top: -16px;
     padding-bottom: 4px;
-    padding-left: 16px;   
+    padding-left: 16px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
 }
 nav > a {
-    color:#09f;   
+    color:#09f;
 }
 .sadness_button {
     text-transform: uppercase;
     font-weight: bold;
     background: inherit;
-    border: dashed 2px white;   
+    border: dashed 2px white;
 }
 #sadness_bar {
     border: solid 1px #555;
@@ -147,4 +158,115 @@ p {
 }
 div.container {
     margin-left:32px;   
+}
+
+button.flat {
+    margin-left: auto;
+    margin-top: 32px;
+    margin-right: auto;
+    font-size: 15pt;
+    text-transform: uppercase;
+    border: #999 dashed 1px;
+}
+
+.center {
+    text-align: center;
+}
+
+.centerauto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#content {
+    font-size: 48pt;
+    text-align: center;
+}
+
+.subcontent {
+    font-size: 24pt;
+    opacity: 0.6;
+}
+
+table {
+    border: solid 1px #777;
+    background-color: #efefef;
+}
+
+td {
+    border: solid 1px #aaa;
+    padding-left: 2px;
+}
+
+@media (max-width: 800px) {
+    button.flat {
+        margin-left: auto;
+        margin-top: 16px;
+        margin-right: auto;
+        font-size: 12pt;
+        text-transform: uppercase;
+        border: #999 dashed 1px;
+    }
+    p {
+        font-size: 13pt;
+        margin-left: 16px;
+    }
+    ul {
+        font-size: 13pt;
+        margin-left: 24px;
+    }
+    h1 {
+        margin-left:8px;   
+    }
+    h3 {
+        margin-left: 8px;
+    }
+    select {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 8px;
+    }
+    table {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+    td {
+        padding-left: 4px;
+        padding-right: 8px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+}
+
+@media (min-width: 800px) {
+    p {
+        font-size: 13pt;
+        margin-left: 120px;
+    }
+    ul {
+        font-size: 13pt;
+        margin-left: 140px;
+    }
+    h3 {
+        margin-left: 100px;
+    }
+    select {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 16px;
+        font-size: 16pt;
+    }
+    table {
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+    td {
+        padding-left: 4px;
+        padding-right: 8px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        font-size: 13pt;
+    }
 }

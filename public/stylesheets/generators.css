@@ -5,10 +5,10 @@
 .dynamic_item {
     display: block;
     text-align: center;
-    font-size: 22pt;
-    margin-top: 8px;
-    color: #777;
-    font-weight: 100;  
+    font-size: 36pt;
+    margin-top: 16px;
+    color: #999;
+    font-weight: 100;
 }
 span.dynamic_tag_remove {
     font-size: 10pt;
@@ -26,7 +26,7 @@ span.dynamic_tag_remove {
     margin-right: auto;
     font-size: 14pt;
     text-align: center;
-    display: block;   
+    display: block;
 }
 #add_item {
     display: block;
@@ -35,5 +35,16 @@ span.dynamic_tag_remove {
     margin-right: auto;
     font-size: 15pt;
     text-transform: uppercase;
-    border: #999 dashed 1px;   
+    border: #999 dashed 1px;
+}
+
+@media (max-width: 800px) {
+    .dynamic_item {
+        display: block;
+        text-align: center;
+        font-size: 24pt;
+        margin-top: 16px;
+        color: #999;
+        font-weight: 400;
+    }
 }
