@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+
+    <div style='padding-left: 64px'>
+        <a href='/blog/rss'><img width='24px' src='/rss.png' /></a>
+    </div>
+    <% for (let i = 0; i < blogId.length; i++) { %>
+        <h1><a href='/blog/<%= blogId[i] %>'><%= blogData[i].title %></a></h1>
+        <div style='padding-left: 80px; padding-bottom: 24px;'>
+            <em>Published <%= dateformat(new Date(blogData[i].published), 'mmmm dS') %></em><br>
+            <em><%= blogData[i].author %></em>
+            <strong>Tag</strong><% for (const tag of blogData[i].tags) { %>
+                <a href='/blog/tag/<%= tag %>'><%= tag %></a>
+            <% } %>
+        </div>
+        <p style='padding-left: 24px;'>
+        <%= blogData[i].summary %>
+        </p>
+        <hr>
+    <% } %>
+    </body>
+</html>

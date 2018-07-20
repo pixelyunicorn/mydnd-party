@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    
+    &emsp;<a href='/blog/'>Back to all posts</a>
+    <div style='padding-left: 64px'>
+        <a href='/blog/rss'><img width='24px' src='/rss.png' /></a>
+    </div>
+
+    <h1><%= postData.title %></h1>
+    <div style='padding-left: 80px; padding-bottom: 24px;'>
+        <em>Published <%= dateformat(new Date(postData.published), 'mmmm dS') %></em><br>
+        <em><%= postData.author %></em>
+        <strong>Tag</strong><% for (const tag of postData.tags) { %>
+            <a href='/blog/tag/<%= tag %>'><%= tag %></a>
+        <% } %>
+    </div>
+    <%- postContent %>
+    </body>
+</html>

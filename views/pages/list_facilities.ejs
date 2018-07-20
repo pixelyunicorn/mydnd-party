@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include ../partials/header.ejs %>
+    <style>
+        h4 {
+            margin-left: 108px;
+        }
+        #suggest_item {
+            margin-left: 108px;
+            text-align: left;
+        }
+        li > p {
+            margin-left: 10px;
+            font-size: 0pt;
+            margin-bottom: 0px;
+            color: #777;
+        }
+        .note {
+            font-size: 10pt;
+        }
+        #descriptions {
+            margin-left: 100pt;
+        }
+        .sublist {
+            margin-left: 8px;
+        }
+    </style>
+    <style id='descriptions-css'></style>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    
+    <h1>Local town facilities</h1>
+    <p>
+        When you arrive in a new location, you may be fascinated by all of
+        the shops and attractions that it has to offer. Contrariwise, you
+        may be disappointed in just how little there is to do. This page
+        provides a list of all the possible facilities that are in a
+        location and brief descriptions.
+    </p>
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
+
+    <br><button id='descriptions'>Show more details</button><br>
+
+    <h3>Jump to:</h3>
+    <ul>
+        <li>
+            Shops
+            <ul class='sublist'>
+                <li><a href='#combat'>Combat</a></li>
+                <li><a href='#magic'>Magic</a></li>
+                <li><a href='#food'>Food</a></li>
+                <li><a href='#general'>General</a></li>
+                <li><a href='#esoteric'>Esoteric</a></li>
+            </ul>
+        </li>
+        <li>
+            Community
+            <ul class='sublist'>
+                <li><a href='#beverages'>Beverages</a></li>
+                <li><a href='#education'>Education</a></li>
+                <li><a href='#adventure'>Activities</a></li>
+                <li><a href='#culture'>Arts &amp; Culture</a></li>
+                <li><a href='#religion'>Religion</a></li>
+                <li><a href='#craft'>Crafts</a></li>
+                <li><a href='#trade'>Trade</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>Shops</h3>
+    <h4 id='combat'>Combat</h4>
+    <p class='note'>
+        In many fantasy RPG games, combat plays a large role. There are many
+        general and niche shops that players may visit.
+    </p>
+
+    <ul>
+        <li>
+            Blacksmith
+            <p>
+                A blacksmith will provide many services. One such service is melting
+                ores and molding them into swords, daggers, or other such weapons.
+            </p>
+        </li>
+        <li>
+            Fletchery
+            <p>
+                Fletchers are those who create arrows. They may have their own
+                shop where they sell their crafted goods.
+            </p>
+        </li>
+        <li>
+            Carpenter
+            <p>
+                Wood is a common material in many worlds, and that has made it a
+                useful material for creating cheap weaponry and items.
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='magic'>Magic</h4>
+    <p class='note'>
+        Many fantasy games include magic, which may manifest itself in a mix
+        of items, spells, and potions.
+    </p>
+
+    <ul>
+        <li>
+            Apothecary
+            <p>
+                Injured folks will visit the local apothecary in lieu of a hospital,
+                where they can purchase herbs and potions. Some more nefarious
+                apothecaries may have a selection of poisons.
+            </p>
+        </li>
+        <li>
+            Magic Items
+            <p>
+                Larger cities may have folks who enjoy collecting and selling magic items.
+                They can range from magic rings that increase your stamina to dangerous
+                and cursed items.
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='food'>Food</h4>
+    <p class='note'>
+        Although eating is not the most exciting part of a game, the variety
+        of food shops can add a bit of flavor to your game.
+    </p>
+
+    <ul>
+        <li>
+            Bakery
+            <p>
+                Bread is a common type of food, and bakers may extend their
+                skills to baking more types of things like pies, cakes, and
+                cookies.
+            </p>
+        </li>
+        <li>
+            Butcher
+            <p>
+                Meat can come from many sources, whether animals are hunted in the
+                woods or raised on a farm. Depending on the local environment, the
+                types of meat available may differ. Butchers are familiar with a
+                variety of knives.
+            </p>
+        </li>
+        <li>
+            Brewery
+            <p>
+                A brewery is the origin of beers. Some may include bars for patrons
+                or they may sell their drinks to nearby taverns.
+            </p>
+        </li>
+        <li>
+            Winery
+            <p>
+                A winery is the origin of wines. Some may be positioned next to
+                grape orchards, or they may obtain the grapes from an orchard out
+                of town and bring them to be processed. A <i>meadery</i> is similar,
+                which produces honey wines.
+            </p>
+        </li>
+        <li>
+            Fish Market
+            <p>
+                In locations near waterways, there may be many stalls that sell whatever
+                items were just caught: shrimps, lobsters, salmon, clams, and many other
+                types of seafood.
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='general'>General Stores</h4>
+    <ul>
+        <li>
+            Adventurer Store
+            <p>
+                Many towns will have a 'general store', which will sell pretty much
+                anything you need: rope, candles, small foods, etc. They are great
+                for adventurers.
+            </p>
+        </li>
+        <li>
+            Stables
+            <p>
+                Horses allow folks to travel much faster and over longer distances without
+                exhausting themselves. The ability to rent or buy horses can be very helpful.
+                Additionally, there may be some need for carrying smaller folks (donkeys) and
+                doing heavy labor (ox).
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='esoteric'>Esoteric</h4>
+    <ul>
+        <li>
+            Puppet Shop
+            <p>
+                Puppets are fun characters that can have a lot of appeal to children.
+                Often puppet shows will bring in young audiences who are interested
+                in the humorous scenes. Puppets can have darker connotations in fantasy
+                settings such as potential associations with voodoo.
+            </p>
+        </li>
+    </ul>
+
+    <h3>Community</h4>
+    <p class='note'>
+        A town is a collection of people, and to be social there are many different
+        types of facilities that a town may have.
+    </p>
+
+    <h4 id='beverages'>Beverages</h4>
+    <ul>
+        <li>
+            Tavern
+            <p>
+                A tavern is a common place where many walks of life will visit to
+                have drinks and get food at night. Visitors may see local guards,
+                adventurers, pirates, travelers, or anyone else. Taverns may also include
+                lodging for those out of town and host live music. You can visit the
+                <a href='/generators/tavern'>tavern name generator</a>.
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='education'>Education</h4>
+    <ul>
+        <li>
+            Library
+        </li>
+        <li>
+            University
+        </li>
+        <li>
+            Museum
+        </li>
+        <li>
+            Observatory
+            <p>
+                Many folks look up at the stars at night, wondering what they are. Some
+                folk may build large towers with the aim of discovering the truths of
+                the universe. They may have a telescope pointing at the sky.
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='adventure'>Excitement</h4>
+    <ul>
+        <li>
+            Sports arena
+            <p>
+                Watching the best, most althetic folks in the town compete against each
+                other can be very exciting. They may compete in head-to-head combat like
+                gladiators or jousting, or may compete in a less bloody sport like soccer.
+            </p>
+        </li>
+        <li>
+            Park
+        </li>
+        <li>
+            Zoo
+        </li>
+        <li>
+            Circus / Carnival
+        </li>
+    </ul>
+
+    <h4 id='culture'>Arts &amp; Culture</h4>
+    <ul>
+        <li>
+            Art Gallery
+        </li>
+        <li>
+            Concert Hall
+        </li>
+    </ul>
+
+    <h4 id='religion'>Religion</h4>
+    <ul>
+        <li>
+            Church / Cathedral
+        </li>
+        <li>
+            Shrine
+            <p>
+                While not a large building of worship, a shrine may still hold spiritual significance
+                for local folk. This may be a small temple or an outdoor area with a statue or other
+                spiritual artifacts.
+            </p>
+        </li>
+        <li>
+            Graveyard
+        </li>
+        <li>
+            Monastery / Nunnery
+            <p>
+                In order to study religion without the temptations of the outside world, some folks will
+                become a monk or a nun. They may take vows of silence of celibacy, or may spend most of their
+                days studying religious texts. Some may have more engagement with the outside world, selling
+                drinks to help fund their mission.
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='craft'>Crafts</h4>
+    <ul>
+        <li>
+            Guilds
+            <p>
+                Guilds are organizations where the best folks of that craft are invited to be a part. They
+                can exchange best practices and refine their craft.
+            </p>
+        </li>
+        <li>
+            Adventuring Guilds
+            <p>
+                Adventuring may be a common activity in some towns, with guilds specifically around receiving
+                contracts and allowing guild members to take them for rewards.
+            </p>
+        </li>
+    </ul>
+
+    <h4 id='trade'>Trade</h4>
+    <ul>
+        <li>
+            Port / Docks
+            <p>
+                Many cities have appeared near waterways due to the ability to get first access to whatever
+                was traded and brought on ships. A port area will feature many sailors and travelers, as well
+                as vendors who will sell recently obtained goods.
+            </p>
+        </li>
+        <li>
+            Trade Hall
+            <p>
+                Individual vendors may all be in a single large building to facilitate trade. This halls may
+                also have VIP areas for secret meetings between larger, wealthier merchants.
+            </p>
+        </li>
+    </ul>
+
+    <br><br><br><br><br><br><br><br>
+
+    <script>
+        let showDescriptions = false;
+        document.querySelector('#descriptions').onclick = () => {
+            showDescriptions = !showDescriptions;
+            if (showDescriptions) {
+                document.querySelector('#descriptions').innerHTML = 'Hide details';
+                document.querySelector('#descriptions-css').innerHTML = `
+                li > p, .note {
+                    font-size: 10pt;
+                    margin-bottom: 10px;
+                }`;
+            } else {
+                document.querySelector('#descriptions').innerHTML = 'Show more details';
+                document.querySelector('#descriptions-css').innerHTML = `
+                li > p, .note {
+                    font-size: 0pt;
+                    margin-bottom: 0px;
+                }`;
+            }
+        }
+    </script>
+</body>
+</html>
