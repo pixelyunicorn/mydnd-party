@@ -1,32 +1,20 @@
 * {
-    transition:  all 0.5s;
+    /* transition:  all 0.5s; */
 }
 body {
     margin: 0px;
     margin-top: 80px;
 }
-h1 {
-    margin-left:64px;   
-}
+
 h2 {
-    display: inline-block;   
+    display: inline-block;
     vertical-align: sub;
     margin-top: 25px;
     color: #90CAF9;
 }
-nav {
-    background-color: #555;
-    color: #09f;
-    margin-top: -16px;
-    padding-bottom: 4px;
-    padding-left: 16px;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-}
-nav > a {
-    color:#09f;
+.navbar-brand {
+    color: #90CAF9!important;
+    font-weight: bold;
 }
 .sadness_button {
     text-transform: uppercase;
@@ -42,7 +30,7 @@ nav > a {
     padding-bottom: 2px;
     width: 40vw;
     margin-left: 16px;
-    font-size: 15pt;  
+    font-size: 15pt;
 }
 input.general {
     display: block;
@@ -52,12 +40,12 @@ input.general {
     margin-bottom:8px;
 }
 div#description {
-    border:solid 1px #999;   
+    border:solid 1px #999;
     margin-left:32px;
     margin-right:64px;
 }
 input.submission_tag {
-    margin-right: 16px;  
+    margin-right: 16px;
     margin-left: 4px;
 }
 .submission_tag_title {
@@ -77,11 +65,11 @@ button.submission {
     font-size: 9pt;
     text-transform: uppercase;
     margin-left: 8px;
-    margin-right: 8px;   
+    margin-right: 8px;
     transition: all 0.3s;
 }
 .nav_link:hover {
-    color:#0f9;   
+    color:#0f9;
 }
 .search_card {
     display: block;
@@ -91,13 +79,13 @@ button.submission {
     padding-top: 8px;
     padding-bottom: 4px;
     box-shadow: #999 0px 1px 2px 0px;
-    margin-left: 32px;   
+    margin-left: 32px;
     margin-bottom: 16px;
 }
 .search_title {
     font-size: 16pt;
     display: block;
-    font-weight: bold;   
+    font-weight: bold;
     cursor: pointer;
 }
 .search_description {
@@ -105,7 +93,7 @@ button.submission {
     display: block;
     margin-left: 16px;
     margin-bottom: 4px;
-    opacity: 0.6;   
+    opacity: 0.6;
 }
 .search_url {
     color: #0c6;
@@ -113,7 +101,7 @@ button.submission {
     display: block;
     font-size: 8pt;
     text-transform: uppercase;
-    margin-left: 16px;   
+    margin-left: 16px;
 }
 .search_tags, .search_categories {
     display: block;
@@ -122,7 +110,7 @@ button.submission {
 .search_tag, .search_category {
     margin-right: 8px;
     font-size: 10pt;
-    font-weight: 100;   
+    font-weight: 100;
 }
 #description_char_count {
     opacity: 0.7;
@@ -131,53 +119,25 @@ button.submission {
     display: block;
     text-transform: uppercase;
 }
-.advanced_search_modal {
-    position: fixed;
-    left:20%;
-    right:20%;
-    top:20%;
-    bottom:20%;
-    background-color:#ddd;
-    transition:opacity 0.5s;
-    opacity:0;
-    display:none;
-    z-index: 1;
-    box-shadow: #999 0px 0px 0px 0px;
-}
-.advanced_search_modal.show {
-    opacity: 1;
-    display:block;
-    box-shadow: #999 0px 4px 10px 3px;
-}
-.close_search_modal {
-    cursor: pointer;
-}
 p {
     margin-left: 32px;
     margin-right: 32px;
-    max-width: 40em;   
-}
-div.container {
-    margin-left:32px;   
+    max-width: 40em;
 }
 
-button.flat {
+.flat {
+    margin-bottom: .5em;
+    text-transform: uppercase
+}
+
+/* button.flat {
     margin-left: auto;
     margin-top: 32px;
     margin-right: auto;
     font-size: 15pt;
     text-transform: uppercase;
     border: #999 dashed 1px;
-}
-
-.center {
-    text-align: center;
-}
-
-.centerauto {
-    margin-left: auto;
-    margin-right: auto;
-}
+} */
 
 #content {
     font-size: 48pt;
@@ -187,16 +147,6 @@ button.flat {
 .subcontent {
     font-size: 24pt;
     opacity: 0.6;
-}
-
-table {
-    border: solid 1px #777;
-    background-color: #efefef;
-}
-
-td {
-    border: solid 1px #aaa;
-    padding-left: 2px;
 }
 
 @media (max-width: 800px) {
@@ -217,7 +167,7 @@ td {
         margin-left: 24px;
     }
     h1 {
-        margin-left:8px;   
+        margin-left:8px;
     }
     h3 {
         margin-left: 8px;
@@ -248,6 +198,9 @@ td {
     ul {
         font-size: 13pt;
         margin-left: 140px;
+    }
+    h1 {
+        margin-left: 100px;
     }
     h3 {
         margin-left: 100px;

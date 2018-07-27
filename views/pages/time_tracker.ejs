@@ -6,129 +6,129 @@
         #time, #moonphase {
             font-size: 48pt;
         }
-        .center {
-            text-align: center;
-        }
-        .center > strong {
+        .text-center > strong {
             font-size: 16pt;
         }
     </style>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Time tracker</h1>
     <p>
         When players go through an adventure, the question of time comes up a lot.
         This tool can make it easy to manage in-game time by keeping track of it
         and allowing for quick shortcuts.
     </p>
-    
-    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
-    
+
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
+
     <div>
         <h3>Start Time</h3>
-        <div class='center'>
-            <button class='start flat' data-time='21600'>Early Morning</button>
-            <button class='start flat' data-time='28800'>Mid-Morning</button>
-            <button class='start flat' data-time='43200'>Noon</button>
-            <button class='startCustom flat'>Input time</button>
+        <div class='text-center'>
+            <button class='start flat btn btn-primary' data-time='21600'>Early Morning</button>
+            <button class='start flat btn btn-primary' data-time='28800'>Mid-Morning</button>
+            <button class='start flat btn btn-primary' data-time='43200'>Noon</button>
+            <button class='startCustom flat btn btn-primary'>Input time</button>
         </div>
     </div>
     <div>
         <h3>Sunset</h3>
-        <select id='sunset'>
+        <select id='sunset' class='form-control w-auto mt-2 mb-2'>
             <option value='[25200, 61200]'>7am, 5pm (Winter)</option>
             <option value='[21600, 68400]'>6am, 7pm (Spring/Autumn)</option>
             <option value='[18000, 75600]'>5am, 9pm (Summer)</option>
         </select>
     </div>
-    <div class='center' style='margin-top: 48px'>
+    <div class='text-center' style='margin-top: 48px'>
         <strong>The current time is</strong><br>
         <span id='time'></span><br>
         <strong id='sunset_diff'></strong>
     </div>
     <div>
         <h3>Update Time</h3>
-        <div class='center'>
-            <button class='elapse flat' data-duration='900'>Walk city block</button>
-            <button class='elapse flat' data-duration='600'>Travel mile on a horse</button>
-            <button class='elapse flat' data-duration='1200'>Walk a mile on a trail</button>
-            <button class='elapse flat' data-duration='2400'>Walk a mile on rough terrain</button><br>
+        <div class='text-center'>
+            <button class='elapse flat btn btn-primary' data-duration='900'>Walk city block</button>
+            <button class='elapse flat btn btn-primary' data-duration='600'>Travel mile on a horse</button>
+            <button class='elapse flat btn btn-primary' data-duration='1200'>Walk a mile on a trail</button>
+            <button class='elapse flat btn btn-primary' data-duration='2400'>Walk a mile on rough terrain</button><br>
 
-            <button class='elapse flat' data-duration='1800'>Eat Meal (Light)</button>
-            <button class='elapse flat' data-duration='3600'>Eat Meal (Medium)</button>
-            <button class='elapse flat' data-duration='10800'>Eat Meal (Feast)</button><br>
+            <button class='elapse flat btn btn-primary' data-duration='1800'>Eat Meal (Light)</button>
+            <button class='elapse flat btn btn-primary' data-duration='3600'>Eat Meal (Medium)</button>
+            <button class='elapse flat btn btn-primary' data-duration='10800'>Eat Meal (Feast)</button><br>
 
-            <button class='elapse flat' data-duration='900'>Short chat</button>
-            <button class='elapse flat' data-duration='1800'>Detailed conversation</button>
-            <button class='elapse flat' data-duration='3600'>Planning</button><br>
+            <button class='elapse flat btn btn-primary' data-duration='900'>Short chat</button>
+            <button class='elapse flat btn btn-primary' data-duration='1800'>Detailed conversation</button>
+            <button class='elapse flat btn btn-primary' data-duration='3600'>Planning</button><br>
 
-            <button class='elapse flat' data-duration='1800'>Setup camp</button>
-            <button class='elapse flat' data-duration='600'>Start campfire</button>
-            <button class='elapse flat' data-duration='28800'>Sleep 8 hours</button>
-            <button class='elapseCustom flat'>Input time</button>
+            <button class='elapse flat btn btn-primary' data-duration='1800'>Setup camp</button>
+            <button class='elapse flat btn btn-primary' data-duration='600'>Start campfire</button>
+            <button class='elapse flat btn btn-primary' data-duration='28800'>Sleep 8 hours</button>
+            <button class='elapseCustom flat btn btn-primary'>Input time</button>
         </div>
     </div>
 
-    <h1 style='margin-top: 80px'>Moon Phase Tracker</h1>
+    <br>
+
+    <h1>Moon Phase Tracker</h1>
     <p>
         The moon will go through a full cycle in roughly 28 days. This tool makes it easy to keep track of
         the phase of the moon if that is important.
-        <table class='centerauto'>
-            <thead>
-                <tr>
-                    <td>Value</td>
-                    <td>Moon Phase</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>28, 0 - 1</td>
-                    <td>New Moon</td>
-                </tr>
-                <tr>
-                    <td>2 - 4</td>
-                    <td>Waxing Crescent</td>
-                </tr>
-                <tr>
-                    <td>5 - 8</td>
-                    <td>1Q Half Moon</td>
-                </tr>
-                <tr>
-                    <td>9 - 12</td>
-                    <td>Waxing Gibbous</td>
-                </tr>
-                <tr>
-                    <td>13 - 15</td>
-                    <td>Full Moon</td>
-                </tr>
-                <tr>
-                    <td>16 - 19</td>
-                    <td>Waning Gibbous</td>
-                </tr>
-                <tr>
-                    <td>20 - 24</td>
-                    <td>3Q Half Moon</td>
-                </tr>
-                <tr>
-                    <td>25 - 27</td>
-                    <td>Waning Crescent</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class='center'>
-            <strong>The current moon phase is</strong><br>
-            <span id='moonphase'></span><br>
-            <strong id='moon_state'></strong>
-        </div>
-        <div class='center'>
-            <button class='moon flat'>Increment moon phase</button>
-            <button class='moonSet flat'>Set current phase</button>
-        </div>
     </p>
+
+    <table class='table mx-auto' style='max-width: 300px'>
+        <thead class='thead-light'>
+            <tr>
+                <th>Value</th>
+                <th>Moon Phase</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>28, 0 - 1</td>
+                <td>New Moon</td>
+            </tr>
+            <tr>
+                <td>2 - 4</td>
+                <td>Waxing Crescent</td>
+            </tr>
+            <tr>
+                <td>5 - 8</td>
+                <td>1Q Half Moon</td>
+            </tr>
+            <tr>
+                <td>9 - 12</td>
+                <td>Waxing Gibbous</td>
+            </tr>
+            <tr>
+                <td>13 - 15</td>
+                <td>Full Moon</td>
+            </tr>
+            <tr>
+                <td>16 - 19</td>
+                <td>Waning Gibbous</td>
+            </tr>
+            <tr>
+                <td>20 - 24</td>
+                <td>3Q Half Moon</td>
+            </tr>
+            <tr>
+                <td>25 - 27</td>
+                <td>Waning Crescent</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class='text-center'>
+        <strong>The current moon phase is</strong><br>
+        <span id='moonphase'></span><br>
+        <strong id='moon_state'></strong>
+    </div>
+    <div class='text-center'>
+        <button class='moon flat btn btn-primary'>Increment moon phase</button>
+        <button class='moonSet flat btn btn-primary'>Set current phase</button>
+    </div>
 
     <script>
         let currTime = 0;
@@ -204,7 +204,7 @@
 
         /**
          * Updates time by a given amount.
-         */ 
+         */
         function elapse(timeDelta) {
             currTime += timeDelta;
             updateLabel();
@@ -220,7 +220,7 @@
                 currMoon++;
             }
             currMoon = currMoon % 28;
-            currTime = (currTime % (24 * 60 * 60)); 
+            currTime = (currTime % (24 * 60 * 60));
             const hour = Math.floor(currTime / 60 / 60);
             const minutes = Math.floor((currTime - hour * 3600) / 60);
             document.querySelector('#time').innerHTML = `${hour}:${(minutes < 10) ? '0' + minutes : minutes}`;

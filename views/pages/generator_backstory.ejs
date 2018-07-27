@@ -5,24 +5,24 @@
     <script src="/scripts/generators.js"></script>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Character Backstory Generator</h1>
     <p>Who is your character? What kind of backstory do they have? Figure that out with this generator. Let it inspire great, complicated characters to make the world that much more immersive.</p>
     <p>Click on each underlined phrase to randomly alter it. Click on the add button to add another item to the character's backstory.</p>
-    
-    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
-    
+
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
+
     <div id='dynamic_list'>
-    
+
     </div>
 
-    <button onclick='additem(true)' id='add_item'>Add</button>
+    <button onclick='additem(true)' id='add_item' class='btn btn-success'>+ ADD</button>
 
     <script>
         const actions = [
-                "skip", "whistle", "sing", "wrestle", "play sports", 
+                "skip", "whistle", "sing", "wrestle", "play sports",
                 "flirt with others", "read", "spend time alone", "drink",
                 "fight", "kill things", "bully", "steal", "hunt", "sleep",
                 "dance", "meditate"
@@ -34,19 +34,19 @@
                 "gambling", "alcohol", "dreamweed", "medicine", "pedophilia"
             ];
         const ailments = [
-                "blind", "deaf", "dumb", "retarded", "paralyzed", "insomiac", 
-                "stupid", "scarred", "crippled", "dying", "feverish", "ill", 
+                "blind", "deaf", "dumb", "retarded", "paralyzed", "insomiac",
+                "stupid", "scarred", "crippled", "dying", "feverish", "ill",
                 "dead", "pregnant", "on fire", "suicidal"
             ];
         const animals = [
-                "raccoon", "horse", "cat", "bat", "dog", "owl", "raven", 
-                "pigeon", "cow", "sheep", "lamb", "deer", "wolf", "bear", 
-                "squirrel", "chipmunk", "chicken", "fish", "shark", "whale", 
+                "raccoon", "horse", "cat", "bat", "dog", "owl", "raven",
+                "pigeon", "cow", "sheep", "lamb", "deer", "wolf", "bear",
+                "squirrel", "chipmunk", "chicken", "fish", "shark", "whale",
                 "bird"
             ];
         const buildings = [
-                "a puppet shop", "a library", "a school", "the nearby castle", 
-                "a bookstore", "an apothecary shop", "a nearby alley", 
+                "a puppet shop", "a library", "a school", "the nearby castle",
+                "a bookstore", "an apothecary shop", "a nearby alley",
                 "a local tavern"
             ];
         const careers = [
@@ -57,26 +57,26 @@
                 "fisherman", "maester", "elder", "mayor", "former king", "queen",
                 "former queen", "prince", "priestess", "princess", "athlete", "hero",
                 "heroine", "animal tamer", "pirate", "ninja", "wizard", "witch",
-                "warlock", "guard", "executioner", "hunter", "farmer", "hobo", 
-                "drunk", "apothecary", "herbalist", "soldier", "archer", 
-                "swordsman", "highwayman", "chef", "doctor", "murder-hobos", 
+                "warlock", "guard", "executioner", "hunter", "farmer", "hobo",
+                "drunk", "apothecary", "herbalist", "soldier", "archer",
+                "swordsman", "highwayman", "chef", "doctor", "murder-hobos",
                 "barkeep", "swinder"
             ];
         const careers_skillable = [
                 "carpenter", "smith", "cooper", "pirate", "swordsman", "knight"
             ];
         const clothing = [
-                "some socks", "some shoes", "a hat", "a shirt", "some pants", 
+                "some socks", "some shoes", "a hat", "a shirt", "some pants",
                 "some undergarments", "boots", "helmet", "armor", "gloves",
-            ];  
+            ];
         const dreams = [
                 "find love", "gain power", "travel", "fly"
             ];
         const family = [
-                "brother", "sister", "aunt", "uncle", "husband", "wife", "cousin", 
-                "nephew", "niece", "son", "daughter", "child", "grandfather", 
-                "grandmother", "grandson", "granddaughter", "great uncle", 
-                "great aunt", "great grandmother", "great grandfather", 
+                "brother", "sister", "aunt", "uncle", "husband", "wife", "cousin",
+                "nephew", "niece", "son", "daughter", "child", "grandfather",
+                "grandmother", "grandson", "granddaughter", "great uncle",
+                "great aunt", "great grandmother", "great grandfather",
                 "great grandson", "great granddaughter", "dog", "cat", "horse",
                 "cow", "chicken"
             ];
@@ -86,26 +86,26 @@
         const items = [
                 "ring", "magic ring", "bracelet", "magic bracelet", "diamond",
                 "amulet"
-            ];  
+            ];
         const items_plus = items.concat([
                 "frog", "bird", "rabbit", "friend", "pet", "dog"
             ])
         const limbs = [
-                "a hand", "an arm", "nose", "an ear", "both hands", 
+                "a hand", "an arm", "nose", "an ear", "both hands",
                 "both arms", "both ears", "a foot", "both feet", "a leg",
                 "both legs", "head", "toenail", "fingernail", "liver", "lung",
                 "kidney", "genitalia", "hair", "a finger", "a toe"
             ];
         const limbs_special = [
-                "eleventh toe", "eleventh finger", "mustache", "beard", 
-                "sideburns", "scar", "ambiguous genetalia", 
+                "eleventh toe", "eleventh finger", "mustache", "beard",
+                "sideburns", "scar", "ambiguous genetalia",
                 "double jointed elbow", "swollen ankles"
             ];
         const locations = [
                 "river", "forest", "mountain", "cave", "tavern"
             ];
         const notables = [
-                "Birthday is today", "A wanted criminal", 
+                "Birthday is today", "A wanted criminal",
                 "Whistles folk tunes", "Natural born leader",
                 "Experiences frequent nightmares"
             ];
@@ -120,29 +120,29 @@
                 "sarcastic", "selfish", "nonreligious", "virgin", "charismatic"
             ];
         const prices = [
-                "much gold", "a few copper pieces", "not much", "a bargain", 
+                "much gold", "a few copper pieces", "not much", "a bargain",
                 "cheaper than expected", "too much", "everything they owned"
             ];
         const relationships = [
                 "in love with", "hates", "racist against", "afraid of"
             ];
         const scaries = [
-                "spiders", "heights", "letting friends down", "snakes", 
+                "spiders", "heights", "letting friends down", "snakes",
                 "bees", "insects"
             ];
         const superlatives = [
-                "best", "worst", "smartest", "stupidest", "strongest", 
+                "best", "worst", "smartest", "stupidest", "strongest",
                 "weakest", "scariest"
             ];
         const time_day = [
-                "first thing in the morning", "before they go to sleep", 
+                "first thing in the morning", "before they go to sleep",
                 "at noon", "at dawn", "at dusk"
             ];
         const weapons = [
-                "shield", "sword", "dagger", "knife", "spear", "bow", 
+                "shield", "sword", "dagger", "knife", "spear", "bow",
                 "masterwork sword"
             ];
-        
+
         const map = {
             actions: actions,
             actions_past: actions_past,
@@ -152,7 +152,7 @@
             buildings: buildings,
             careers: careers,
             careers_skillable: careers_skillable,
-            clothing: clothing, 
+            clothing: clothing,
             dreams: dreams,
             family: family,
             fearables: fearables,
@@ -171,7 +171,7 @@
             time_day: time_day,
             weapons: weapons
         };
-        
+
         const lines = [
                 `Is ${genNumber([0, 150])} years old`,
                 `Is ${gen('ailments')}`,
@@ -204,7 +204,7 @@
                 `Addicted to ${gen('addictables')}`,
                 `Has a fear of ${gen('fearables')}`
             ];
-        
+
         additem(true);
     </script>
 </body>

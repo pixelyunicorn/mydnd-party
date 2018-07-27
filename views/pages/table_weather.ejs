@@ -5,9 +5,9 @@
     <script src="/scripts/tables.js"></script>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Weather Tables</h1>
     <p>What is the weather for the day like? What is the temperature?
     </p>
@@ -20,19 +20,19 @@
     <p>Using the dropdown, one can select the environment for a more
         realistic set of weather conditions.
     </p>
-    
-    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
-    
+
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
+
     <div id='content'></div>
 
-    <select id='environment'>
+    <select id='environment' class='form-control w-auto mt-2 mb-2'>
         <option value="autumn1">Autumn (Mild Climate)</option>
         <option value="autumn2">Autumn (Cold Climate)</option>
         <option value="winter1">Winter (Mild Climate)</option>
     </select>
-    <div class="center">
-        <button onclick='reroll(100)' class='reroll flat'>Re-Roll</button>
-        <button onclick='reroll(1000)' class='reroll flat'>Roll Advanced Table</button>
+    <div class="text-center">
+        <button onclick='reroll(100)' class='reroll flat btn btn-primary'>Re-Roll</button>
+        <button onclick='reroll(1000)' class='reroll flat btn btn-primary'>Roll Advanced Table</button>
     </div>
 
     <script>
@@ -46,9 +46,9 @@
         addToLookupTable('Thunderstorm (35F)', 96, 98, 'autumn1');
         addToLookupTable('Tornado (45F)', 99, 99, 'autumn1');
         addToLookupTable('Early Blizzard (25F)', 100, 100, 'autumn1');
-    
+
         addToLookupTable('Chilly (50F)', 101, 500, 'autumn1');
-        addToLookupTable('Chilly & Cloudy (45F)', 501, 590, 'autumn1');        
+        addToLookupTable('Chilly & Cloudy (45F)', 501, 590, 'autumn1');
         addToLookupTable('Chilly & Gray Skies (45F)', 591, 600, 'autumn1');
         addToLookupTable('Light rain (40F)', 601, 650, 'autumn1');
         addToLookupTable('Misty (40F)', 651, 700, 'autumn1');
@@ -71,7 +71,7 @@
         addToLookupTable('Snow (30F)', 81, 95, 'autumn2');
         addToLookupTable('Thunderstorm (25F)', 96, 99, 'autumn2');
         addToLookupTable('Blizzard (10F)', 100, 100, 'autumn2');
-        
+
         addToLookupTable('Chilly (40F)', 101, 500, 'autumn2');
         addToLookupTable('Chilly & Cloudy (40F)', 501, 590, 'autumn2');
         addToLookupTable('Chilly & Gray Skies (40F)', 591, 600, 'autumn2');
@@ -113,7 +113,7 @@
         function reroll(length) {
             let environment = document.querySelector('#environment').value;
             let res = pullFromLookupTable(length, environment);
-            document.querySelector('#content').innerHTML = `${res.value} <span class='subcontent'>(${res.index})</span>`; 
+            document.querySelector('#content').innerHTML = `${res.value} <span class='subcontent'>(${res.index})</span>`;
         }
     </script>
 </body>

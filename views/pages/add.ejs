@@ -4,12 +4,12 @@
     <% include ../partials/header.ejs %>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Add a new resource</h1>
     <p>We are curating the best DND resources for users to quickly find. If you have a great resource to share, please add it.</p>
-    
+
     <input type='text' placeholder="Title" class='general' id='title'/><br>
     <p>Give a brief description (no more than 140 characters)</p>
     <div contenteditable="true" id='description'></div>
@@ -30,40 +30,40 @@
             for(i in categories) {
                 var c = categories[i];
                 document.write(c.name+'<input type="checkbox" class="submission_tag" id="'+c.id+'" />');
-            }   
-        
+            }
+
             function refreshCharCount() {
                 var dval = $('#description').html();
                 var len = dval.length;
                 $('#description_char_count').html(len);
                 if(len > 140) {
-                    $('#description_char_count').css('color', 'red');   
+                    $('#description_char_count').css('color', 'red');
                 } else {
-                    $('#description_char_count').css('color', '');      
+                    $('#description_char_count').css('color', '');
                 }
             }
             setInterval(refreshCharCount, 300);
         </script>
     </div>
-    
+
     <button type="submit" id='submit' class='submission'>Submit</button>
     <script>
         $('#submit').click(function() {
             var tout = "";
             for(i=0;i<tags.length;i++) {
                 if($('#'+tags[i].id)[0].checked) {
-                    tout += tags[i].id+",";  
+                    tout += tags[i].id+",";
                 }
             }
             var cout = "";
             for(i=0;i<categories.length;i++) {
                 console.log(i);
                 if($('#'+categories[i].id)[0].checked) {
-                    cout += categories[i].id+",";  
+                    cout += categories[i].id+",";
                 }
             }
             $.post('/api/v1/resources', {title: document.getElementById('title').value, description: document.getElementById('description').innerHTML, url: document.getElementById('url').value, tags:tout, categories:cout, submitted: new Date().getTime()}, function(response) {
-                alert(response); 
+                alert(response);
             });
         });
     </script>

@@ -7,11 +7,11 @@
     </style>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Nighttime Encounter Generator</h1>
-    <p>When you're camping at night, you may want someone to keep watch of 
+    <p>When you're camping at night, you may want someone to keep watch of
         your surroundings. Otherwise, you may end up finding something or
         someone approaching your campsite.
     </p>
@@ -24,18 +24,18 @@
     <p>Using the dropdown, one can select the environment for a more
         realistic set of encounters.
     </p>
-    
-    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
-    
+
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
+
     <div id='content'></div>
 
-    <select id='environment'>
+    <select id='environment' class='form-control w-auto mt-2 mb-2'>
         <option value="woods">Woods</option>
         <option value="farm">Farmland</option>
     </select>
-    <div class='center'>
-        <button onclick='reroll(100)' class='reroll flat'>Re-Roll</button>
-        <button onclick='reroll(1000)' class='reroll flat'>Roll Advanced Table</button>
+    <div class='text-center'>
+        <button onclick='reroll(100)' class='reroll flat btn btn-primary'>Re-Roll</button>
+        <button onclick='reroll(1000)' class='reroll flat btn btn-primary'>Roll Advanced Table</button>
     </div>
 
     <script>
@@ -103,7 +103,7 @@
         function reroll(length) {
             let environment = document.querySelector('#environment').value;
             let res = pullFromLookupTable(length, environment);
-            document.querySelector('#content').innerHTML = `${res.value} <span class='subcontent'>(${res.index})</span>`; 
+            document.querySelector('#content').innerHTML = `${res.value} <span class='subcontent'>(${res.index})</span>`;
         }
     </script>
 </body>

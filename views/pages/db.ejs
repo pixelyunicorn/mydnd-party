@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </head>
 
-<body>
+<body class="container">
 <div class="container">
 
     <h2><a href='http://sadness.party/<%=results[0].name %>'>sadness.party/<%= results[0].name %></a></h2>
@@ -15,14 +15,14 @@
     <span id='chat_invite'>why are you sad?</span><br>
     <input type='text' id='message' autofocus>
     <button id='message_submit' type='submit' class='sadness_button'>Post</button>
-    
+
     <div id='the_rules'>
         <u>Rules</u><br>
         <b>Don't be stupid.</b><br>
         <i>If you don't follow the rules, you will be permabanned</i>
     </div>
     <button id='refresh' class='sadness_button'>refresh</button>
-    
+
     <div id='chat_list'>
         <% chat_results.forEach(function(r) { %>
             <li>
@@ -37,7 +37,7 @@
             $.post('/api/room/message', {room: roomId, message: message}, function(res) {
                 document.getElementById('message').value = "";
                 redrawList();
-            }); 
+            });
         };
     </script>
 </div>
@@ -61,7 +61,7 @@
         redrawList();
         document.getElementById('refresh').onclick = redrawList;
         setInterval(function() {
-//            redrawList();   
+//            redrawList();
         }, 20*1000);
     </script>
 </body>

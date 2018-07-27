@@ -1,70 +1,88 @@
 <% include ../partials/tags.ejs %>
 
-<nav>
-    <a href='/'><h2>My DnD .party</h2></a>
-    
-    <script>
-        function leggo() {
-            document.location.href = '/search?q='+$('#sadness_bar').val();   
-        }
-        function searchModal() {
-            $('.advanced_search_modal').addClass('show');   
-        }
-        function hideModal() {
-            $('.advanced_search_modal').removeClass('show');   
-        }
-        $('#sadness_bar').bind('enterKey', function() {
-            leggo();
-        });
-        $('#sadness_bar').keyup(function(e){
-            console.log(e.keyCode);
-            if(e.keyCode == 13) {
-                $(this).trigger("enterKey");
-            }
-        });
-        $('#sadness_normal').click(function() {
-            leggo(); 
-        });
-        $('#sadness_special').click(function() {
-            searchModal(); 
-        });
-    </script>
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">My DND .party</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li> -->
+        </ul>
+        <form class="form-inline" action="/search" method="GET">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" id="basic_search" name="q" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <span class="navbar-text">&nbsp; or &nbsp;</span>
+            <a class="btn btn-outline-warning my-2 my-sm-0" href="#" id="toggleSearchModal" data-toggle="modal" data-target="#searchModal">Advanced Search</a>
+            <script>
+                $("#toggleSearchModal").click(function(){
+                    $("#adv_search").val( $("#basic_search").val() );
+                });
+            </script>
+        </form>
+    </div>
 </nav>
 
-<div class='advanced_search_modal'>
-    <b class='close_search_modal' onclick='hideModal()'>X</b>
-    <input type='search' id='search_modal_search' placeholder="Search..." />
-    <span class='submission_tag_title'>Tags</span>
-    <script>
-        for(i in tags) {
-            var t = tags[i];
-            document.write(t.name+'<input type="checkbox" class="submission_tag" id="'+t.id+'" />');
-        }
-    </script>
-    <span class='submission_tag_title'>Categories</span>
-    <script>
-        for(i in categories) {
-            var c = categories[i];
-            document.write(c.name+'<input type="checkbox" class="submission_tag" id="'+c.id+'" />');
-        }   
-    </script>
-    <button class='sadness_button' id='sadness_advanced'>Search</button>
-    <script>
-        $('#sadness_advanced').click(function() {
-            var tout = "";
-            for(i=0;i<tags.length;i++) {
-                if($('#'+tags[i].id)[0].checked) {
-                    tout += tags[i].id+",";  
-                }
-            }
-            var cout = "";
-            for(i=0;i<categories.length;i++) {
-                console.log(i);
-                if($('#'+categories[i].id)[0].checked) {
-                    cout += categories[i].id+",";  
-                }
-            }
-            document.location.href = '/search?q='+$('#search_modal_search').val()+"&tag="+tout+"&category="+cout; 
-        });
-    </script>
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="modal-content" action="/search" method="GET">
+            <div class="modal-header">
+                <h5 class="modal-title">Advanced Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="adv_search">Search</label>
+                    <input type="text" class="form-control" id="adv_search" name="q" placeholder="Search...">
+                </div>
+                <div class="form-group">
+                    <label for="tags">Tags</label>
+                    <script>
+                        for(i in tags) {
+                            var t = tags[i];
+                            document.write('<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="'+t.id+'" />'+'<label class="custom-control-label" for="'+t.id+'">'+t.name+'</label></div>');
+                        }
+                    </script>
+                </div>
+                <div class="form-group">
+                    <label for="categories">Categories</label>
+                    <script>
+                        for(i in categories) {
+                            var c = categories[i];
+                            document.write('<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="'+c.id+'" />'+'<label class="custom-control-label" for="'+c.id+'">'+c.name+'</label></div>');
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="sadness_advanced">Search</button>
+                <!-- <button type="button" class="btn btn-primary" onclick="document.location.href = '/search?q='+$('#sadness_bar').val();">Search</button> -->
+                <script>
+                    $('#sadness_advanced').click(function() {
+                        var tout = "";
+                        for(i=0;i<tags.length;i++) {
+                            if($('#'+tags[i].id)[0].checked) {
+                                tout += tags[i].id+",";
+                            }
+                        }
+                        var cout = "";
+                        for(i=0;i<categories.length;i++) {
+                            console.log(i);
+                            if($('#'+categories[i].id)[0].checked) {
+                                cout += categories[i].id+",";
+                            }
+                        }
+                        document.location.href = '/search?q='+$('#search').val()+"&tag="+tout+"&category="+cout;
+                    });
+                </script>
+            </div>
+        </form>
+    </div>
 </div>
+
+

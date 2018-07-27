@@ -3,12 +3,12 @@
     <head>
         <% include ../partials/header.ejs %>
     </head>
-    <body>
+    <body class="container">
         <% include ../partials/nav.ejs %>
         <% include ../partials/tags.ejs %>
-    
+
         <h1>Search Results</h1>
-        
+
         <div id='results'></div>
         <script>
             query = window.location.search.substring(1);
@@ -54,7 +54,7 @@
                 }
                 out += "</span></span>";
                 return out;
-            }        
+            }
         </script>
     </body>
 </html>

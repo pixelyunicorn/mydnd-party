@@ -4,36 +4,71 @@
     <% include ../partials/header.ejs %>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Welcome to MyDnD.party</h1>
     <p>This website contains a variety of useful tools for dungeon masters and players.</p>
 
     <p>Check out the <a href='/blog'><strong>blog</strong></a> for continuing ideas and content.</p>
 
-    <h3>Generators</h3>
-    <ul>
-        <li><a href='/generators/backstory/'>Backstory Generator</a></li>
-        <li><a href='/generators/town/'>Fantasy Town Name Generator</a></li>
-        <li><a href='/generators/inn/'>Inn Name Generator</a></li>
-    </ul>
+    <div class='row'>
+        <div class='col-sm'>
+            <div class='card'>
+                <div class='card-body'>
+                    <h5 class='card-title'>Generators</h5>
+                    <div class='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                    </div>
+                    <div class='list-group list-group-flush'>
+                        <a class='list-group-item' href='/generators/backstory/'>Backstory Generator</a>
+                        <a class='list-group-item' href='/generators/town/'>Fantasy Town Name Generator</a>
+                        <a class='list-group-item' href='/generators/inn/'>Inn Name Generator</a>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm'>
+            <div class='card'>
+                <div class='card-body'>
+                    <h5 class='card-title'>Disc Tables</h5>
+                    <div class='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                    </div>
+                    <div class='list-group list-group-flush'>
+                        <a class='list-group-item' href='/tables/nighttime/'>Overnight Encounters</a>
+                        <a class='list-group-item' href='/tables/weather/'>Weather</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h3>Dice Tables</h3>
-    <ul>
-        <li><a href='/tables/nighttime'>Overnight Encounters</a></li>
-        <li><a href='/tables/weather'>Weather</a></li>
-    </ul>
+    <br>
 
-    <h3>Useful Tools</h3>
-    <ul>
-        <li><a href='/tools/time'>In-Game Clock</a></li>
-    </ul>
+    <div class='row'>
+        <div class='col-sm'>
+            <div class='card'>
+                <div class='card-body'>
+                    <h5 class='card-title'>Useful Tools</h5>
+                    <div class='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                    </div>
+                    <div class='list-group list-group-flush'>
+                        <a class='list-group-item' href='/tools/time/'>Backstory In-Game Clock</a>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm'>
+            <div class='card'>
+                <div class='card-body'>
+                    <h5 class='card-title'>Handy Lists</h5>
+                    <div class='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</div>
+                    </div>
+                    <div class='list-group list-group-flush'>
+                        <a class='list-group-item' href='/lists/facilities/'>Town Facilities</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h3>Handy Lists</h3>
-    <ul>
-        <li><a href='/lists/facilities'>Town Facilities</a></li>
-    </ul>
+    <br>
+
     <p>This project is in beta. Please <a href='http://github.com/fleker/mydnd-party/issues/new' target="_blank">leave feedback</a> on what you want to see.</p>
 </body>
 </html>

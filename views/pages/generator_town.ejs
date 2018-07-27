@@ -5,21 +5,21 @@
     <script src="/scripts/generators.js"></script>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Fantasy Town Name Generator</h1>
     <p>This generates a variety of town names. It uses a simple process of combining two English words together.</p>
     <p>Click on each underlined phrase to randomly alter it.</p>
-    
-    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
-    
+
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
+
     <div id='dynamic_list'>
-    
+
     </div>
 
     <script>
-        const prefix = ["Red", "Blue", "Green", "White", "Gray", 
+        const prefix = ["Red", "Blue", "Green", "White", "Gray",
             "Brown", "Black", "Yellow",
             "Cerulean", "Vermillion", "Saffron", "Indigo",
             "Turquoise",
@@ -37,11 +37,11 @@
 
             "Clover", "Lichen", "Moss", "Peats", "Rose",
             "Mahogany", "Maple", "Oak", "Palm", "Pine", "Timber", "Willow",
-            
+
             "Fort",
 
             "Canary", "Dove", "Eagle", "Goose", "Hawk", "Swan",
-            "Bear", "Deer",  "Elk", "Fox", "Hog", "Otter", 
+            "Bear", "Deer",  "Elk", "Fox", "Hog", "Otter",
             "Owl", "Rabbit", "Snake", "Tortoise", "Turtle", "Whale", "Wolf",
             "Bass", "Cod", "Minnow", "Salmon", "Shark", "Trout",
             "Clam", "Oyster",
@@ -65,7 +65,7 @@
             "Spring", "Summer", "Autumn", "Winter",
 
             "Wind", "Wynd",
-        
+
             "Arrow", "Mid", "New", "Pure", "Ra", "Va"];
 
         const suffix = ["arbor", "canyon", "covert", "gorge", "swamp", "valley",
@@ -93,19 +93,19 @@
             "acre", "barrow", "burrow", "bury", "cross", "nest",
 
             "ark", "bellow", "bluff", "cairn", "crest", "edge", "fair", "front", "glen", "helm",
-            "hollow", "hurst", "mere", "moor", "mouth", "mulch", "point", "post", "rest", "shaw", 
+            "hollow", "hurst", "mere", "moor", "mouth", "mulch", "point", "post", "rest", "shaw",
             "shire", "spire", "thorpe", "tooth", "valley", "wallow", "ward", "wick"];
-        
+
         const map = {
             prefix: prefix,
             suffix: suffix
         };
-        
+
         const lines = [
                 `${gen('prefix')}${gen('suffix')}`,
                 `${gen('prefix')}   ${gen('suffix')}`
             ];
-        
+
         additem(false);
     </script>
 </body>

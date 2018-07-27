@@ -5,17 +5,17 @@
     <script src="/scripts/generators.js"></script>
 </head>
 
-<body>
+<body class="container">
     <% include ../partials/nav.ejs %>
-    
+
     <h1>Inn Name Generator</h1>
     <p>This generates a variety of names for a local tavern or inn. It uses a simple process of combining two English words together.</p>
     <p>Click on each underlined phrase to randomly alter it.</p>
-    
-    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a> 
-    
+
+    <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
+
     <div id='dynamic_list'>
-    
+
     </div>
 
     <script>
@@ -45,16 +45,16 @@
             'Devil', 'Demon', 'Dragon', 'Pixie', 'Fairy', 'Gnome',
             'Guild', 'Club', 'Tavern', 'Inn', 'Pub', 'Bar', 'House'
         ];
-        
+
         const map = {
             adjective: adjective,
             noun: noun
         };
-        
+
         const lines = [
                 `The ${gen('adjective')} ${gen('noun')}`
             ];
-        
+
         additem(false);
     </script>
 </body>
