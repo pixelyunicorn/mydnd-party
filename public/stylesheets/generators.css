@@ -2,6 +2,10 @@
     border-bottom: dashed 1px #333;
     cursor: pointer;
 }
+.dynamic_tag:hover {
+    border-bottom-style: solid;
+    color: black;
+}
 .dynamic_item {
     display: block;
     text-align: center;

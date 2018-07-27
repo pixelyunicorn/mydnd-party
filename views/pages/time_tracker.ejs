@@ -25,7 +25,7 @@
     <a href='https://github.com/Fleker/mydnd-party/issues/new' target="_blank" id='suggest_item'>Make a suggestion</a>
 
     <div>
-        <h3>Start Time</h3>
+        <h3 class='text-center ml-0 mt-4'>Start Time</h3>
         <div class='text-center'>
             <button class='start flat btn btn-primary' data-time='21600'>Early Morning</button>
             <button class='start flat btn btn-primary' data-time='28800'>Mid-Morning</button>
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div>
-        <h3>Sunset</h3>
+        <h3 class='text-center ml-0 mt-4'>Sunset</h3>
         <select id='sunset' class='form-control w-auto mt-2 mb-2'>
             <option value='[25200, 61200]'>7am, 5pm (Winter)</option>
             <option value='[21600, 68400]'>6am, 7pm (Spring/Autumn)</option>
@@ -47,7 +47,7 @@
         <strong id='sunset_diff'></strong>
     </div>
     <div>
-        <h3>Update Time</h3>
+        <h3 class='text-center ml-0 mt-4'>Update Time</h3>
         <div class='text-center'>
             <button class='elapse flat btn btn-primary' data-duration='900'>Walk city block</button>
             <button class='elapse flat btn btn-primary' data-duration='600'>Travel mile on a horse</button>
@@ -69,6 +69,8 @@
         </div>
     </div>
 
+    <br>
+    <hr>
     <br>
 
     <h1>Moon Phase Tracker</h1>
@@ -125,7 +127,7 @@
         <span id='moonphase'></span><br>
         <strong id='moon_state'></strong>
     </div>
-    <div class='text-center'>
+    <div class='text-center mt-2'>
         <button class='moon flat btn btn-primary'>Increment moon phase</button>
         <button class='moonSet flat btn btn-primary'>Set current phase</button>
     </div>

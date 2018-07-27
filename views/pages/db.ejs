@@ -6,7 +6,6 @@
 </head>
 
 <body class="container">
-<div class="container">
 
     <h2><a href='http://sadness.party/<%=results[0].name %>'>sadness.party/<%= results[0].name %></a></h2>
     <% results.forEach(function(r) { %>
@@ -31,6 +30,7 @@
             </li>
         <% }); %>
     </div>
+
     <script>
         document.getElementById('message_submit').onclick = function() {
             message = document.getElementById('message').value;
@@ -40,7 +40,6 @@
             });
         };
     </script>
-</div>
     <script>
         function redrawList() {
             $.get('/api/room/'+roomId+'/messages', function(res) {

@@ -9,27 +9,25 @@
 
     <h1>Add a new resource</h1>
     <p>We are curating the best DND resources for users to quickly find. If you have a great resource to share, please add it.</p>
+    <form class='p-margin m-auto'>
+        <input type='text' placeholder='Title' class='form-control' id='title'/>
+        <label for='description' class='mt-4'>Give a brief description (no more than 140 characters)</label>
+        <div contenteditable='true' class='form-control' id='description'></div><span id='description_char_count'></span>
 
-    <input type='text' placeholder="Title" class='general' id='title'/><br>
-    <p>Give a brief description (no more than 140 characters)</p>
-    <div contenteditable="true" id='description'></div>
-    <span id='description_char_count'></span>
-    <input type="url" placeholder="Url" class='general' id='url' /><br>
-    <span class='submission_tag_title'>Tags</span>
-    <div class='container'>
+        <h3 class='submission_tag_title'>Tags</h3>
         <script>
             for(i in tags) {
                 var t = tags[i];
-                document.write(t.name+'<input type="checkbox" class="submission_tag" id="'+t.id+'" />');
+                document.write('<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="'+t.id+'_" />'+'<label class="custom-control-label" for="'+t.id+'_">'+t.name+'</label></div>');
             }
         </script>
-    </div>
-    <span class='submission_tag_title'>Categories</span>
-    <div class='container'>
+
+        <h3 class='submission_tag_title'>Categories</h3>
+
         <script>
             for(i in categories) {
                 var c = categories[i];
-                document.write(c.name+'<input type="checkbox" class="submission_tag" id="'+c.id+'" />');
+                document.write('<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="'+c.id+'_" />'+'<label class="custom-control-label" for="'+c.id+'_">'+c.name+'</label></div>');
             }
 
             function refreshCharCount() {
@@ -44,9 +42,9 @@
             }
             setInterval(refreshCharCount, 300);
         </script>
-    </div>
-
-    <button type="submit" id='submit' class='submission'>Submit</button>
+        <br><br>
+        <button type='button' id='submit' class='btn btn-primary'>Submit</button>
+    </form>
     <script>
         $('#submit').click(function() {
             var tout = "";
